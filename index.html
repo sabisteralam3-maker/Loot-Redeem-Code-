@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>LootRedeemCode - Free Google Play Redeem Code & Rewards</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <div id="dynamicAdHeadSlot"></div>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    html, body {
+      background: #020503;
+      color: #FFFFFF;
+      min-height: 100dvh;
+      width: 100%;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      min-height: 100dvh;
+      padding: 16px 14px 60px 14px;
+      position: relative;
+    }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .brand-title {
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.1;
+      color: #FFF;
+    }
+    .brand-title span { color: #84CC16; }
+    .brand-sub {
+      font-size: 11px;
+      color: #84CC16;
+      font-weight: 600;
+    }
+
+    .wallet-capsule {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: #08110A;
+      border: 1px solid rgba(234, 179, 8, 0.4);
+      padding: 6px 12px;
+      border-radius: 20px;
+      box-shadow: 0 0 14px rgba(234, 179, 8, 0.2);
+      cursor: pointer;
+    }
+    .wallet-val { font-size: 15px; font-weight: 900; color: #FFF; }
+
+    .menu-icon-btn {
+      width: 38px;
+      height: 38px;
+      background: #08110A;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .menu-icon-btn span {
+      width: 16px;
+      height: 2px;
+      background: #FFF;
+      border-radius: 2px;
+    }
+
+    /* SCREENS */
+    .app-screen { display: none; }
+    .app-screen.active { display: block; animation: screenFade 0.2s ease-in-out; }
+    @keyframes screenFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* AUTH SCREEN */
+    .auth-card {
+      background: radial-gradient(130% 120% at 85% 25%, #184214 0%, #08150a 65%, #020603 100%);
+      border: 1px solid rgba(132, 204, 22, 0.35);
+      border-radius: 24px;
+      padding: 28px 20px;
+      text-align: center;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8);
+      margin-top: 20px;
+    }
+    .auth-input {
+      width: 100%;
+      background: #030704;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 12px;
+      color: #FFF;
+      font-size: 13px;
+      margin-bottom: 12px;
+      outline: none;
+    }
+    .auth-input:focus { border-color: #84CC16; }
+
+    /* HERO CARD */
+    .hero-card {
+      background: radial-gradient(130% 120% at 85% 25%, #184214 0%, #08150a 65%, #020603 100%);
+      border: 1px solid rgba(132, 204, 22, 0.35);
+      border-radius: 22px;
+      padding: 20px 18px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.7);
+    }
+    .hero-content { width: 62%; position: relative; z-index: 2; }
+    .hero-h1 { font-size: 21px; font-weight: 900; line-height: 1.15; margin-bottom: 6px; }
+    .hero-h1 span { color: #84CC16; display: block; }
+    .hero-sub { font-size: 11px; color: #A3A3A3; font-weight: 700; margin-bottom: 16px; }
+    .btn-green-main {
+      background: #84CC16;
+      border: none;
+      color: #020603;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 11px 18px;
+      border-radius: 22px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 15px rgba(132, 204, 22, 0.4);
+    }
+    .hero-svg-art {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 145px;
+      height: 145px;
+      z-index: 1;
+    }
+
+    /* DIVIDERS */
+    .sec-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .sec-line { flex: 1; height: 1px; background: rgba(132, 204, 22, 0.25); }
+    .sec-text { font-size: 13px; font-weight: 900; letter-spacing: 1px; color: #FFF; display: flex; align-items: center; gap: 6px; }
+    .neon-symbol { color: #84CC16; font-size: 10px; }
+
+    /* 3 EARN CARDS */
+    .earn-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .grid-card {
+      background: #081009;
+      border: 1px solid rgba(132, 204, 22, 0.15);
+      border-radius: 20px;
+      padding: 16px 8px 14px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 200px;
+      text-align: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    }
+    .card-icon { width: 52px; height: 52px; margin-bottom: 4px; display: flex; align-items: center; justify-content: center; }
+    .card-title { font-size: 14px; font-weight: 800; color: #FFF; margin-bottom: 2px; }
+    .card-desc { font-size: 10px; color: #9CA3AF; line-height: 1.25; margin-bottom: 6px; }
+    .card-limit { font-size: 9px; font-weight: 800; color: #84CC16; margin-bottom: 8px; }
+    .card-btn {
+      width: 92%;
+      padding: 9px 0;
+      border-radius: 18px;
+      border: none;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .btn-spin-color { background: #6D28D9; color: #FFF; }
+    .btn-refer-color { background: #EAB308; color: #000; }
+    .btn-flip-color { background: #2563EB; color: #FFF; }
+
+    /* DAILY TASKS */
+    .task-bar {
+      background: #081009;
+      border: 1px solid rgba(132, 204, 22, 0.15);
+      border-radius: 18px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    }
+    .btn-task-outline {
+      background: transparent;
+      border: 1.5px solid #84CC16;
+      color: #84CC16;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 8px 18px;
+      border-radius: 14px;
+      cursor: pointer;
+    }
+
+    /* REDEEM CARDS */
+    .redeem-card {
+      background: #081009;
+      border: 1px solid rgba(132, 204, 22, 0.2);
+      border-radius: 20px;
+      padding: 18px 16px;
+      margin-bottom: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    }
+    .redeem-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .btn-full-redeem {
+      width: 100%;
+      background: #84CC16;
+      border: none;
+      color: #020603;
+      font-size: 13px;
+      font-weight: 900;
+      padding: 12px;
+      border-radius: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 4px 15px rgba(132, 204, 22, 0.3);
+    }
+
+    /* USER ORDERS / HISTORY LIST */
+    .order-item-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+    .order-row-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .order-code-box {
+      background: #000;
+      border: 1px dashed #84CC16;
+      border-radius: 10px;
+      padding: 8px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+    .btn-copy-code {
+      background: #84CC16;
+      color: #000;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    /* FOOTER BADGES */
+    .footer-badges {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+    }
+    .f-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .f-title { font-size: 9px; font-weight: 800; color: #FFF; }
+    .f-sub { font-size: 8px; color: #9CA3AF; }
+
+    /* MODAL POPUPS */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 3, 0.94);
+      backdrop-filter: blur(14px);
+      z-index: 99999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-box {
+      width: 100%;
+      max-width: 350px;
+      background: #09120B;
+      border: 1px solid rgba(132, 204, 22, 0.4);
+      border-radius: 24px;
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+      position: relative;
+    }
+    .modal-close-txt { background: transparent; border: none; color: #9CA3AF; font-size: 11px; font-weight: 700; margin-top: 10px; cursor: pointer; }
+
+    /* SPIN WHEEL */
+    .wheel-container {
+      position: relative;
+      width: 240px;
+      height: 240px;
+      margin: 10px auto 16px auto;
+    }
+    #spinWheelCanvas {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      box-shadow: 0 0 20px rgba(132, 204, 22, 0.3);
+    }
+    .wheel-pointer {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 14px solid transparent;
+      border-right: 14px solid transparent;
+      border-top: 24px solid #FFD21F;
+      z-index: 10;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+    }
+
+    #coinFlipTarget {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #F59E0B, #B45309);
+      border: 3px solid #FDE047;
+      margin: 16px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
+      transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    #dynamicAdBannerSlot {
+      width: 100%;
+      text-align: center;
+      margin-top: 16px;
+      min-height: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="brand-wrap" onclick="checkHomeClick()">
+        <div style="width:42px; height:42px;">
+          <svg viewBox="0 0 48 48" width="42" height="42">
+            <rect x="8" y="18" width="32" height="24" rx="4" fill="#84CC16"/>
+            <rect x="6" y="12" width="36" height="8" rx="2" fill="#65A30D"/>
+            <rect x="21" y="12" width="6" height="30" fill="#FDE047"/>
+            <path d="M24 12 C18 4 12 8 18 12 Z" fill="#FDE047"/>
+            <path d="M24 12 C30 4 36 8 30 12 Z" fill="#FDE047"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">Loot<span>RedeemCode</span></div>
+          <div class="brand-sub">Earn Free Rewards</div>
+        </div>
+      </div>
+
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div class="wallet-capsule" onclick="checkHomeClick()">
+          <svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#EAB308"/><text x="12" y="16" font-size="12" font-weight="900" text-anchor="middle" fill="#713F12">₹</text></svg>
+          <span class="wallet-val">₹<span id="userBalTxt">0.00</span></span>
+        </div>
+        <div class="menu-icon-btn" onclick="openSupportModal()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 0: AUTH SCREEN -->
+    <div id="screen-auth" class="app-screen active">
+      <div class="auth-card">
+        <div style="font-size: 40px; margin-bottom: 8px;">🎁</div>
+        <h2 style="font-size: 20px; font-weight: 900; margin-bottom: 4px;" id="authTitle">Sign Up &amp; Start Earning</h2>
+        <p style="font-size: 11px; color: #9CA3AF; margin-bottom: 18px;">1 Device = 1 Account Protected System</p>
+        
+        <input type="text" id="authUserName" class="auth-input" placeholder="Your Full Name" />
+        <input type="email" id="authEmail" class="auth-input" placeholder="Enter Email Address" />
+        <input type="password" id="authPassword" class="auth-input" placeholder="Enter Password (Min 6 chars)" />
+        <input type="text" id="authReferCode" class="auth-input" placeholder="Referral Code (Optional)" style="text-transform: uppercase;" />
+
+        <button class="btn-full-redeem" id="btnAuthAction" onclick="handleAuthSubmit()">Create Account</button>
+
+        <div style="font-size: 12px; color: #9CA3AF; margin-top: 16px; cursor: pointer;" onclick="toggleAuthMode()">
+          <span id="authToggleMsg">Already have an account? <b style="color:#84CC16;">Login here</b></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 1: MAIN HOME DASHBOARD -->
+    <div id="screen-home" class="app-screen">
+      <div class="hero-card">
+        <div class="hero-content">
+          <div class="hero-h1">
+            EARN FREE
+            <span>REDEEM CODE</span>
+          </div>
+          <div class="hero-sub">COMPLETE TASKS &amp; GET REWARDS</div>
+          <button class="btn-green-main" onclick="triggerTask()">🎁 Start Earning Now</button>
+        </div>
+
+        <svg class="hero-svg-art" viewBox="0 0 140 140">
+          <rect x="35" y="12" width="72" height="98" rx="8" fill="#0F172A" stroke="#84CC16" stroke-width="1.8" transform="rotate(10 70 70)"/>
+          <text x="64" y="30" fill="#FFF" font-size="9" font-weight="800" transform="rotate(10 70 70)">Google Play</text>
+          <polygon points="56,42 56,76 80,59" fill="#4285F4" transform="rotate(10 70 70)"/>
+          <polygon points="56,76 80,59 74,84" fill="#EA4335" transform="rotate(10 70 70)"/>
+          <polygon points="56,42 74,34 80,59" fill="#34A853" transform="rotate(10 70 70)"/>
+          <polygon points="80,59 74,34 94,59" fill="#FBBC04" transform="rotate(10 70 70)"/>
+          <rect x="66" y="68" width="62" height="52" rx="6" fill="#EAB308"/>
+          <rect x="60" y="60" width="74" height="12" rx="3" fill="#CA8A04"/>
+          <rect x="92" y="60" width="10" height="60" fill="#FEF08A"/>
+          <ellipse cx="40" cy="115" rx="14" ry="6" fill="#D97706"/>
+          <ellipse cx="40" cy="111" rx="14" ry="6" fill="#F59E0B"/>
+          <ellipse cx="40" cy="107" rx="14" ry="6" fill="#FFD21F"/>
+        </svg>
+      </div>
+
+      <div class="sec-divider">
+        <div class="sec-line"></div>
+        <div class="sec-text"><span class="neon-symbol">◄►</span> EARN OPTIONS <span class="neon-symbol">◄►</span></div>
+        <div class="sec-line"></div>
+      </div>
+
+      <div class="earn-grid">
+        <div class="grid-card">
+          <div class="card-icon">
+            <svg width="50" height="50" viewBox="0 0 50 50">
+              <circle cx="25" cy="25" r="22" fill="#7C3AED" stroke="#C084FC" stroke-width="2"/>
+              <path d="M25 25 L25 5 A20 20 0 0 1 45 25 Z" fill="#F59E0B"/>
+              <path d="M25 25 L45 25 A20 20 0 0 1 25 45 Z" fill="#EF4444"/>
+              <path d="M25 25 L25 45 A20 20 0 0 1 5 25 Z" fill="#10B981"/>
+              <path d="M25 25 L5 25 A20 20 0 0 1 25 5 Z" fill="#3B82F6"/>
+              <circle cx="25" cy="25" r="5" fill="#FFF"/>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Spin</div>
+            <div class="card-desc">Spin the wheel &amp; win coins</div>
+            <div class="card-limit">Limit: <span id="spinCountTxt">5/5</span></div>
+          </div>
+          <button class="card-btn btn-spin-color" onclick="openSpinModal()">Spin Now</button>
+        </div>
+
+        <div class="grid-card">
+          <div class="card-icon">
+            <svg width="50" height="50" viewBox="0 0 50 50">
+              <circle cx="25" cy="18" r="9" fill="#EAB308"/>
+              <path d="M12 40 C12 30 18 28 25 28 C32 28 38 30 38 40" fill="#CA8A04"/>
+              <circle cx="38" cy="18" r="6" fill="#FDE047"/>
+              <path d="M34 26 L42 26 M38 22 L38 30" stroke="#000" stroke-width="2"/>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Refer Earn</div>
+            <div class="card-desc">Refer friends &amp; earn coins</div>
+            <div class="card-limit">Earn ₹1 per invite</div>
+          </div>
+          <button class="card-btn btn-refer-color" onclick="switchScreen('refer')">Refer Now</button>
+        </div>
+
+        <div class="grid-card">
+          <div class="card-icon">
+            <svg width="50" height="50" viewBox="0 0 50 50">
+              <circle cx="25" cy="25" r="22" fill="#EAB308" stroke="#FEF08A" stroke-width="2"/>
+              <circle cx="25" cy="25" r="16" fill="#CA8A04"/>
+              <polygon points="25,14 28,21 36,21 29,26 32,34 25,29 18,34 21,26 14,21 22,21" fill="#FEF08A"/>
+            </svg>
+          </div>
+          <div>
+            <div class="card-title">Flip Coin</div>
+            <div class="card-desc">Flip coin &amp; win coins</div>
+            <div class="card-limit">Limit: <span id="flipCountTxt">5/5</span></div>
+          </div>
+          <button class="card-btn btn-flip-color" onclick="openFlipModal()">Flip Now</button>
+        </div>
+      </div>
+
+      <div class="task-bar">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <svg width="40" height="40" viewBox="0 0 40 40">
+            <rect x="8" y="6" width="24" height="30" rx="4" fill="#84CC16"/>
+            <rect x="14" y="3" width="12" height="6" rx="2" fill="#4D7C0F"/>
+            <path d="M13 16 L17 20 L27 12" stroke="#020603" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M13 26 L17 30 L27 22" stroke="#020603" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          </svg>
+          <div>
+            <div style="font-size:14px; font-weight:800;">Daily Tasks</div>
+            <div style="font-size:11px; color:#9CA3AF;">Complete task &amp; earn (Limit: <span id="taskCountTxt">5/5</span>)</div>
+          </div>
+        </div>
+        <button class="btn-task-outline" onclick="triggerTask()">Complete</button>
+      </div>
+
+      <div class="sec-divider">
+        <div class="sec-line"></div>
+        <div class="sec-text"><span class="neon-symbol">◄►</span> REDEEM OPTIONS <span class="neon-symbol">◄►</span></div>
+        <div class="sec-line"></div>
+      </div>
+
+      <div class="redeem-card">
+        <div class="redeem-top">
+          <div style="display:flex; align-items:center; gap:12px; width:65%;">
+            <svg width="36" height="36" viewBox="0 0 24 26">
+              <path fill="#4285F4" d="M1.3 0.6C0.8 1.1 0.5 1.9 0.5 2.9V23.1C0.5 24.1 0.8 24.9 1.3 25.4L1.4 25.5L13.1 13.8V13.5L1.4 1.8L1.3 0.6Z"/>
+              <path fill="#FBBC04" d="M17 17.8L13.1 13.9V13.4L17 9.5L17.1 9.6L21.7 12.2C23 12.9 23 14.1 21.7 14.8L17.1 17.4L17 17.8Z"/>
+              <path fill="#EA4335" d="M17.1 17.4L13.1 13.5L1.3 25.3C1.8 25.8 2.6 25.9 3.5 25.4L17.1 17.4Z"/>
+              <path fill="#34A853" d="M17.1 9.6L3.5 1.6C2.6 1.1 1.8 1.2 1.3 1.7L13.1 13.5L17.1 9.6Z"/>
+            </svg>
+            <div>
+              <div style="font-size:14px; font-weight:800;">Google Redeem Code</div>
+              <div style="font-size:10px; color:#9CA3AF; margin-top:2px;">Get Instant Play Store Codes</div>
+            </div>
+          </div>
+          <div style="background:#020603; border:1px solid rgba(234,179,8,0.3); padding:6px 12px; border-radius:12px; text-align:right;">
+            <div style="font-size:9px; color:#84CC16; font-weight:700;">Min Redeem</div>
+            <div style="font-size:13px; font-weight:900;">10 🪙</div>
+          </div>
+        </div>
+        <button class="btn-full-redeem" onclick="openRedeemDialog()">🎁 Redeem Now</button>
+      </div>
+
+      <!-- MY REDEEM ORDERS & REWARD CODES (HISTORY) -->
+      <div class="sec-divider" style="margin-top:24px;">
+        <div class="sec-line"></div>
+        <div class="sec-text"><span class="neon-symbol">◄►</span> MY REDEEM HISTORY <span class="neon-symbol">◄►</span></div>
+        <div class="sec-line"></div>
+      </div>
+      <div id="userOrdersContainer">
+        <div style="text-align:center; font-size:11px; color:#9CA3AF; padding:10px;">No redeem orders placed yet.</div>
+      </div>
+
+      <div id="dynamicAdBannerSlot"></div>
+    </div>
+
+    <!-- SCREEN 2: DEDICATED REFER EARN -->
+    <div id="screen-refer" class="app-screen">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
+        <button onclick="switchScreen('home')" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:#FFF; padding:8px 14px; font-weight:800; cursor:pointer;">← Back</button>
+        <h3 style="font-size:18px; font-weight:800;">Refer &amp; Earn ₹1.00</h3>
+      </div>
+
+      <div class="hero-card" style="text-align:center; padding:24px 16px;">
+        <div style="font-size:36px; margin-bottom:6px;">👥</div>
+        <div style="font-size:20px; font-weight:900; margin-bottom:4px;">Share LootRedeemCode</div>
+        <div style="font-size:12px; color:#A3A3A3; margin-bottom:16px;">Earn instant ₹1.00 every time a friend joins!</div>
+
+        <div style="background:rgba(0,0,0,0.5); border:1px dashed #84CC16; border-radius:14px; padding:12px; margin-bottom:14px;">
+          <div style="font-size:10px; color:#84CC16; font-weight:800;">YOUR REFERRAL CODE:</div>
+          <div style="font-size:26px; font-weight:900; letter-spacing:3px; color:#FFD21F; margin:4px 0;" id="userRefCodeDisplay">...</div>
+        </div>
+
+        <div style="display:flex; gap:8px; margin-bottom:14px;">
+          <input type="text" id="userRefLinkInput" readonly class="auth-input" style="margin:0; font-size:12px;" />
+          <button class="btn-green-main" onclick="copyRefLink()">Copy</button>
+        </div>
+
+        <div style="display:flex; gap:10px;">
+          <a id="btnShareWhatsApp" href="#" target="_blank" style="text-decoration:none; flex:1;">
+            <button class="btn-full-redeem" style="background:#25D366; color:#FFF;">💬 WhatsApp</button>
+          </a>
+          <a id="btnShareTelegram" href="#" target="_blank" style="text-decoration:none; flex:1;">
+            <button class="btn-full-redeem" style="background:#229ED9; color:#FFF;">📢 Telegram</button>
+          </a>
+        </div>
+      </div>
+
+      <div class="grid-card" style="min-height:auto; padding:18px; margin-bottom:14px;">
+        <div style="font-size:11px; color:#9CA3AF; font-weight:800;">TOTAL FRIENDS INVITED</div>
+        <div style="font-size:32px; font-weight:900; color:#84CC16; margin:4px 0;" id="userRefTotalTxt">0</div>
+        <div style="font-size:11px; color:#EAB308;">Total Referral Bonus: ₹<span id="userRefEarnedTxt">0.00</span></div>
+      </div>
+
+      <button style="width: 100%; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); color: #EF4444; padding: 12px; border-radius: 14px; font-weight: 800; cursor: pointer;" onclick="handleUserLogout()">
+        Log Out
+      </button>
+    </div>
+
+    <!-- FOOTER TRUST BADGES -->
+    <div class="footer-badges">
+      <div class="f-item"><span style="color:#84CC16;">🛡️</span><div class="f-title">100% Secure</div><div class="f-sub">Safe &amp; Trusted</div></div>
+      <div class="f-item"><span style="color:#EAB308;">⚡</span><div class="f-title">Instant Payout</div><div class="f-sub">No Delay</div></div>
+      <div class="f-item"><span style="color:#3B82F6;">🎖️</span><div class="f-title">Trusted</div><div class="f-sub">User Friendly</div></div>
+      <div class="f-item"><span style="color:#A855F7;">🎧</span><div class="f-title">24/7 Support</div><div class="f-sub">We're Here</div></div>
+    </div>
+    <div style="text-align:center; font-size:10px; color:#6B7280; margin-top:16px;">© 2026 LootRedeemCode. All Rights Reserved.</div>
+
+  </div>
+
+  <!-- POPUP MODALS -->
+  <div id="modalSpin" class="modal-backdrop">
+    <div class="modal-box">
+      <h3 style="font-size:17px; font-weight:900; margin-bottom:4px;">🎡 Lucky Spin &amp; Win</h3>
+      <p style="font-size:11px; color:#9CA3AF; margin-bottom:8px;">Spin &amp; win cash prize directly!</p>
+      
+      <div class="wheel-container">
+        <div class="wheel-pointer"></div>
+        <canvas id="spinWheelCanvas" width="240" height="240"></canvas>
+      </div>
+
+      <button class="btn-full-redeem" id="btnSpinAction" onclick="executeSpin()">SPIN &amp; EARN</button>
+      <button class="modal-close-txt" onclick="closeModal('modalSpin')">Close</button>
+    </div>
+  </div>
+
+  <div id="modalFlip" class="modal-backdrop">
+    <div class="modal-box">
+      <h3 style="font-size:17px; font-weight:900; margin-bottom:4px;">🪙 Flip Coin &amp; Win</h3>
+      <p style="font-size:11px; color:#9CA3AF; margin-bottom:12px;">Tap to flip &amp; claim cash!</p>
+      <div id="coinFlipTarget">⭐</div>
+      <button class="btn-full-redeem" id="btnFlipAction" onclick="executeCoinFlip()">FLIP COIN</button>
+      <button class="modal-close-txt" onclick="closeModal('modalFlip')">Close</button>
+    </div>
+  </div>
+
+  <div id="modalRedeem" class="modal-backdrop">
+    <div class="modal-box">
+      <h3 style="font-size:17px; font-weight:900; margin-bottom:4px;">🎁 Redeem Google Play Code</h3>
+      <p style="font-size:11px; color:#9CA3AF; margin-bottom:14px;">Select amount between ₹10 and ₹800:</p>
+      <select id="selRedeemAmt" class="auth-input">
+        <option value="10">₹10 Play Code</option>
+        <option value="20">₹20 Play Code</option>
+        <option value="50">₹50 Play Code</option>
+        <option value="100">₹100 Play Code</option>
+        <option value="200">₹200 Play Code</option>
+        <option value="500">₹500 Play Code</option>
+        <option value="800">₹800 Play Code</option>
+      </select>
+      <input type="email" id="txtDeliveryGmail" placeholder="Enter Gmail to receive code" class="auth-input" />
+      <button class="btn-full-redeem" onclick="submitRedeemOrder()">Confirm Redeem</button>
+      <button class="modal-close-txt" onclick="closeModal('modalRedeem')">Cancel</button>
+    </div>
+  </div>
+
+  <div id="modalSupport" class="modal-backdrop">
+    <div class="modal-box">
+      <h3 style="font-size:17px; font-weight:900; margin-bottom:4px;">Help &amp; Official Channels</h3>
+      <p style="font-size:11px; color:#9CA3AF; margin-bottom:14px;">Join our community for payment proofs:</p>
+      <a href="https://t.me/NexoraInfotechOfficial" target="_blank" style="text-decoration:none;">
+        <button class="btn-full-redeem" style="background:#2563EB; color:#FFF; margin-bottom:10px;">📢 Telegram Channel</button>
+      </a>
+      <a href="https://t.me/NexoraTeam1_bot" target="_blank" style="text-decoration:none;">
+        <button class="btn-full-redeem" style="background:#7C3AED; color:#FFF;">🤖 24/7 Support Bot</button>
+      </a>
+      <button class="modal-close-txt" onclick="closeModal('modalSupport')">Close</button>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC ENGINE -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAy3Zs3J3j-hFu3A9OfG68M4LRLFbwHwaA",
+      authDomain: "quizly-earn.firebaseapp.com",
+      databaseURL: "https://quizly-earn-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "quizly-earn",
+      storageBucket: "quizly-earn.firebasestorage.app",
+      messagingSenderId: "696248072791",
+      appId: "1:696248072791:web:7c315afae333b814ed0112"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    function getHardwareDeviceId() {
+      let dId = localStorage.getItem('loot_hardware_device_token');
+      if (!dId) {
+        dId = 'DEV_' + Math.random().toString(36).substring(2, 9).toUpperCase() + Date.now().toString(36).toUpperCase();
+        localStorage.setItem('loot_hardware_device_token', dId);
+      }
+      return dId;
+    }
+
+    const currentDeviceId = getHardwareDeviceId();
+    let currentAuthUser = null;
+    let currentUserData = null;
+    let isSignupMode = true;
+
+    let appRemoteConfig = {
+      redeemActive: true,
+      directAdUrl: "https://richinfo.co/richpartners/pops/js/richads-pu-ob.js",
+      popunderScript: "",
+      bannerAdCode: "",
+      referralBaseLink: "https://lootredeemcodei.blogspot.com"
+    };
+
+    db.ref('loot_master_config').on('value', snap => {
+      const v = snap.val();
+      if (v) {
+        appRemoteConfig = Object.assign(appRemoteConfig, v);
+        injectAdminAds();
+        if (currentUserData) renderUserInterface(currentUserData);
+      }
+    });
+
+    function injectAdminAds() {
+      if (appRemoteConfig.popunderScript && !document.getElementById('injectedPopunderSlot')) {
+        const slot = document.getElementById('dynamicAdHeadSlot');
+        slot.innerHTML = appRemoteConfig.popunderScript;
+      }
+      if (appRemoteConfig.bannerAdCode) {
+        document.getElementById('dynamicAdBannerSlot').innerHTML = appRemoteConfig.bannerAdCode;
+      }
+    }
+
+    // STRICT AUTH LISTENER (NO JUMP TO DASHBOARD UNLESS LOGGED IN)
+    auth.onAuthStateChanged(user => {
+      if (user && !user.isAnonymous) {
+        currentAuthUser = user;
+        switchScreen('home');
+        syncUserDatabase(user.uid);
+        listenUserOrders(user.uid);
+      } else {
+        currentAuthUser = null;
+        currentUserData = null;
+        switchScreen('auth');
+        const urlParams = new URLSearchParams(window.location.search);
+        const refUrlParam = urlParams.get('ref');
+        if (refUrlParam) document.getElementById('authReferCode').value = refUrlParam;
+      }
+    });
+
+    function checkHomeClick() {
+      if (currentAuthUser) {
+        switchScreen('home');
+      } else {
+        switchScreen('auth');
+      }
+    }
+
+    function toggleAuthMode() {
+      isSignupMode = !isSignupMode;
+      document.getElementById('authTitle').innerText = isSignupMode ? "Sign Up & Start Earning" : "Login to Your Account";
+      document.getElementById('authUserName').style.display = isSignupMode ? "block" : "none";
+      document.getElementById('authReferCode').style.display = isSignupMode ? "block" : "none";
+      document.getElementById('btnAuthAction').innerText = isSignupMode ? "Create Account" : "Login Now";
+      document.getElementById('authToggleMsg').innerHTML = isSignupMode 
+        ? "Already have an account? <b style='color:#84CC16;'>Login here</b>"
+        : "Don't have an account? <b style='color:#84CC16;'>Sign up here</b>";
+    }
+
+    async function handleAuthSubmit() {
+      const email = document.getElementById('authEmail').value.trim();
+      const pass = document.getElementById('authPassword').value.trim();
+
+      if (!email || !pass) return alert("Email aur Password daalna zaroori hai!");
+      if (pass.length < 6) return alert("Password kam se kam 6 characters ka hona chahiye!");
+
+      if (isSignupMode) {
+        const name = document.getElementById('authUserName').value.trim();
+        const refCodeEntered = document.getElementById('authReferCode').value.trim().toUpperCase();
+
+        if (!name) return alert("Apna naam enter karein!");
+
+        // ONE DEVICE ONE ACCOUNT LOCK CHECK
+        const deviceCheckSnap = await db.ref('loot_device_bindings/' + currentDeviceId).once('value');
+        if (deviceCheckSnap.exists()) {
+          return alert("⚠️ Is Device par pehle se ek account ban chuka hai! Ek phone par sirf 1 account chal sakta hai. Login karein.");
+        }
+
+        try {
+          const cred = await auth.createUserWithEmailAndPassword(email, pass);
+          const uid = cred.user.uid;
+          const generatedCode = 'LT' + Math.random().toString(36).substring(2, 6).toUpperCase();
+          const today = getCurrentIndianDateString();
+
+          const newUserData = {
+            name: name,
+            email: email,
+            deviceId: currentDeviceId,
+            balance: 0.00,
+            spinLeft: 5,
+            flipLeft: 5,
+            taskLeft: 5,
+            lastActiveDate: today,
+            referralCode: generatedCode,
+            referralsCount: 0,
+            createdAt: Date.now()
+          };
+
+          await db.ref('loot_users/' + uid).set(newUserData);
+          await db.ref('loot_device_bindings/' + currentDeviceId).set({ uid: uid, email: email });
+
+          if (refCodeEntered) {
+            db.ref('loot_users').orderByChild('referralCode').equalTo(refCodeEntered).once('value', s => {
+              s.forEach(parentU => {
+                db.ref('loot_users/' + parentU.key).transaction(u => {
+                  if (u) {
+                    u.balance = Number(((u.balance || 0) + 1.00).toFixed(2));
+                    u.referralsCount = (u.referralsCount || 0) + 1;
+                  }
+                  return u;
+                });
+              });
+            });
+          }
+        } catch (err) {
+          alert("Registration Error: " + err.message);
+        }
+
+      } else {
+        try {
+          await auth.signInWithEmailAndPassword(email, pass);
+        } catch (err) {
+          alert("Login Error: " + err.message);
+        }
+      }
+    }
+
+    function handleUserLogout() {
+      auth.signOut().then(() => {
+        switchScreen('auth');
+      });
+    }
+
+    // INDIAN STANDARD TIME (IST) HELPER (RAAT 12 BAJE RESET)
+    function getCurrentIndianDateString() {
+      const options = { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'numeric', day: 'numeric' };
+      return new Intl.DateTimeFormat('en-IN', options).format(new Date());
+    }
+
+    function syncUserDatabase(uid) {
+      db.ref('loot_users/' + uid).on('value', snap => {
+        currentUserData = snap.val();
+        if (currentUserData) {
+          verifyDailyReset(uid, currentUserData);
+          renderUserInterface(currentUserData);
+        }
+      });
+    }
+
+    // DAILY MIDNIGHT 12:00 AM AUTO RESET LOGIC
+    function verifyDailyReset(uid, u) {
+      const today = getCurrentIndianDateString();
+      if (u.lastActiveDate !== today) {
+        db.ref('loot_users/' + uid).update({
+          spinLeft: 5,
+          flipLeft: 5,
+          taskLeft: 5,
+          lastActiveDate: today
+        });
+      }
+    }
+
+    function renderUserInterface(u) {
+      document.getElementById('userBalTxt').innerText = Number(u.balance || 0).toFixed(2);
+      document.getElementById('spinCountTxt').innerText = `${u.spinLeft !== undefined ? u.spinLeft : 5}/5`;
+      document.getElementById('flipCountTxt').innerText = `${u.flipLeft !== undefined ? u.flipLeft : 5}/5`;
+      document.getElementById('taskCountTxt').innerText = `${u.taskLeft !== undefined ? u.taskLeft : 5}/5`;
+
+      const code = u.referralCode || "LOOT01";
+      document.getElementById('userRefCodeDisplay').innerText = code;
+
+      const base = appRemoteConfig.referralBaseLink || "https://lootredeemcodei.blogspot.com";
+      const shareUrl = `${base}?ref=${code}`;
+      document.getElementById('userRefLinkInput').value = shareUrl;
+
+      document.getElementById('userRefTotalTxt').innerText = u.referralsCount || 0;
+      document.getElementById('userRefEarnedTxt').innerText = Number((u.referralsCount || 0) * 1.00).toFixed(2);
+
+      const shareMsg = encodeURIComponent(`Free Google Play Redeem Code Loot! Join here: ${shareUrl}`);
+      document.getElementById('btnShareWhatsApp').href = `whatsapp://send?text=${shareMsg}`;
+      document.getElementById('btnShareTelegram').href = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${shareMsg}`;
+    }
+
+    // LISTEN & DISPLAY USER'S ORDERS WITH COPY CODE BUTTON
+    function listenUserOrders(uid) {
+      db.ref('loot_orders').orderByChild('uid').equalTo(uid).on('value', snap => {
+        const container = document.getElementById('userOrdersContainer');
+        let html = '';
+        snap.forEach(c => {
+          const ord = c.val();
+          const isCompleted = ord.status === 'COMPLETED';
+          html = `
+            <div class="order-item-card">
+              <div class="order-row-top">
+                <span style="font-size:13px; font-weight:800; color:#84CC16;">₹${ord.amount} Google Play Code</span>
+                <span style="font-size:11px; font-weight:800; color:${isCompleted ? '#84CC16' : (ord.status === 'REJECTED' ? '#EF4444' : '#FACC15')};">
+                  ${ord.status}
+                </span>
+              </div>
+              <div style="font-size:10px; color:#9CA3AF;">Email: ${ord.deliveryEmail} | Date: ${new Date(ord.timestamp).toLocaleDateString()}</div>
+              ${isCompleted && ord.deliveredCode ? `
+                <div class="order-code-box">
+                  <span style="font-family:monospace; font-size:13px; font-weight:900; color:#FFD21F;">${ord.deliveredCode}</span>
+                  <button class="btn-copy-code" onclick="copyRedeemCode('${ord.deliveredCode}')">Copy Code</button>
+                </div>
+              ` : ''}
+            </div>
+          ` + html;
+        });
+        container.innerHTML = html || '<div style="text-align:center; font-size:11px; color:#9CA3AF; padding:10px;">No redeem orders placed yet.</div>';
+      });
+    }
+
+    function copyRedeemCode(code) {
+      navigator.clipboard.writeText(code);
+      alert("🎉 Redeem Code Copied: " + code);
+    }
+
+    function getRandomReward() {
+      const rewards = [0.10, 0.20, 0.30, 0.40, 0.50];
+      return rewards[Math.floor(Math.random() * rewards.length)];
+    }
+
+    // TASK ACTION (PREVENTS BINA TASK KIYE COMPLETE HONA)
+    function triggerTask() {
+      if (!currentUserData || currentUserData.taskLeft <= 0) return alert("Daily task limit reached (5/5)! Resets tonight at 12:00 AM.");
+
+      if (appRemoteConfig.directAdUrl) {
+        window.open(appRemoteConfig.directAdUrl, '_blank');
+      }
+
+      alert("Task Started! Sponsor link opened in new tab. Please stay for 6 seconds to complete...");
+      setTimeout(() => {
+        const reward = getRandomReward();
+        db.ref('loot_users/' + currentAuthUser.uid).update({
+          balance: Number(((currentUserData.balance || 0) + reward).toFixed(2)),
+          taskLeft: currentUserData.taskLeft - 1
+        });
+        alert(`🎉 Task Completed! +₹${reward.toFixed(2)} credited!`);
+      }, 6000);
+    }
+
+    // SPIN WHEEL
+    const wheelSegments = [
+      { text: "₹0.10", val: 0.10, color: "#84CC16" },
+      { text: "₹0.20", val: 0.20, color: "#7C3AED" },
+      { text: "₹0.30", val: 0.30, color: "#EAB308" },
+      { text: "₹0.40", val: 0.40, color: "#2563EB" },
+      { text: "₹0.50", val: 0.50, color: "#EC4899" },
+      { text: "₹0.15", val: 0.15, color: "#10B981" }
+    ];
+    let wheelAngle = 0;
+    let isSpinning = false;
+
+    function openSpinModal() {
+      document.getElementById('modalSpin').style.display = 'flex';
+      drawWheelCanvas(wheelAngle);
+    }
+
+    function drawWheelCanvas(angle) {
+      const c = document.getElementById('spinWheelCanvas');
+      if (!c) return;
+      const ctx = c.getContext('2d');
+      const numSegments = wheelSegments.length;
+      const arc = (2 * Math.PI) / numSegments;
+      ctx.clearRect(0, 0, 240, 240);
+
+      for (let i = 0; i < numSegments; i++) {
+        const segAngle = angle + i * arc;
+        ctx.beginPath();
+        ctx.fillStyle = wheelSegments[i].color;
+        ctx.moveTo(120, 120);
+        ctx.arc(120, 120, 115, segAngle, segAngle + arc);
+        ctx.lineTo(120, 120);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.save();
+        ctx.translate(120, 120);
+        ctx.rotate(segAngle + arc / 2);
+        ctx.fillStyle = "#FFFFFF";
+        ctx.font = "bold 15px Plus Jakarta Sans";
+        ctx.textAlign = "right";
+        ctx.fillText(wheelSegments[i].text, 95, 5);
+        ctx.restore();
+      }
+
+      ctx.beginPath();
+      ctx.arc(120, 120, 22, 0, 2 * Math.PI);
+      ctx.fillStyle = '#020503';
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = '#84CC16';
+      ctx.stroke();
+    }
+
+    function executeSpin() {
+      if (isSpinning) return;
+      if (!currentUserData || currentUserData.spinLeft <= 0) return alert("Daily spin limit (5/5) reached! Resets tonight at 12:00 AM.");
+
+      if (appRemoteConfig.directAdUrl) {
+        window.open(appRemoteConfig.directAdUrl, '_blank');
+      }
+
+      isSpinning = true;
+      const prizeIdx = Math.floor(Math.random() * wheelSegments.length);
+      const rotations = 6;
+      const arc = (2 * Math.PI) / wheelSegments.length;
+      const targetAngle = (rotations * 2 * Math.PI) + ( (3 * Math.PI / 2) - (prizeIdx * arc + arc / 2) );
+
+      let start = null;
+      function animate(time) {
+        if (!start) start = time;
+        const progress = Math.min((time - start) / 3200, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        wheelAngle = ease * targetAngle;
+        drawWheelCanvas(wheelAngle);
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          isSpinning = false;
+          const reward = wheelSegments[prizeIdx].val;
+          db.ref('loot_users/' + currentAuthUser.uid).update({
+            balance: Number(((currentUserData.balance || 0) + reward).toFixed(2)),
+            spinLeft: currentUserData.spinLeft - 1
+          });
+          alert(`🎉 Wheel landed on ${wheelSegments[prizeIdx].text}! +₹${reward.toFixed(2)} added!`);
+          closeModal('modalSpin');
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    // FLIP COIN
+    function openFlipModal() { document.getElementById('modalFlip').style.display = 'flex'; }
+    function executeCoinFlip() {
+      if (!currentUserData || currentUserData.flipLeft <= 0) return alert("Daily flip limit (5/5) reached! Resets tonight at 12:00 AM.");
+
+      if (appRemoteConfig.directAdUrl) {
+        window.open(appRemoteConfig.directAdUrl, '_blank');
+      }
+
+      const coin = document.getElementById('coinFlipTarget');
+      coin.style.transform = 'rotateY(720deg)';
+      const reward = getRandomReward();
+
+      setTimeout(() => {
+        coin.style.transform = 'none';
+        db.ref('loot_users/' + currentAuthUser.uid).update({
+          balance: Number(((currentUserData.balance || 0) + reward).toFixed(2)),
+          flipLeft: currentUserData.flipLeft - 1
+        });
+        alert(`🪙 Coin landed! +₹${reward.toFixed(2)} credited!`);
+        closeModal('modalFlip');
+      }, 1200);
+    }
+
+    // REDEEM PLAY CODE
+    function openRedeemDialog() {
+      if (appRemoteConfig.redeemActive === false) {
+        return alert("Server down, please try again later");
+      }
+      document.getElementById('modalRedeem').style.display = 'flex';
+    }
+
+    function submitRedeemOrder() {
+      if (appRemoteConfig.redeemActive === false) {
+        closeModal('modalRedeem');
+        return alert("Server down, please try again later");
+      }
+
+      const amt = Number(document.getElementById('selRedeemAmt').value);
+      const email = document.getElementById('txtDeliveryGmail').value.trim();
+
+      if (!email || !email.includes('@')) return alert("Valid Gmail address daalna zaroori hai!");
+      if ((currentUserData.balance || 0) < amt) return alert(`Aapke wallet me kam se kam ₹${amt.toFixed(2)} hone chahiye.`);
+
+      db.ref('loot_users/' + currentAuthUser.uid + '/balance').set(Number((currentUserData.balance - amt).toFixed(2)));
+      db.ref('loot_orders').push({
+        uid: currentAuthUser.uid,
+        userName: currentUserData.name,
+        deliveryEmail: email,
+        amount: amt,
+        status: "PENDING",
+        deliveredCode: "",
+        timestamp: Date.now()
+      });
+
+      alert(`✅ ₹${amt} Play Code ka order place ho chuka hai! Code aapke My Redeem History me show hoga.`);
+      closeModal('modalRedeem');
+    }
+
+    function switchScreen(s) {
+      document.querySelectorAll('.app-screen').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById('screen-' + s);
+      if (target) target.classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function copyRefLink() {
+      const copyText = document.getElementById('userRefLinkInput');
+      copyText.select();
+      navigator.clipboard.writeText(copyText.value);
+      alert("Referral link copied!");
+    }
+
+    function openSupportModal() { document.getElementById('modalSupport').style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+
+    setTimeout(() => { drawWheelCanvas(0); }, 500);
+  </script>
+</body>
+</html>
