@@ -1,17 +1,30 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta name="afccb499ac37d04138f2e378dab78e80a7d6f6a6" content="afccb499ac37d04138f2e378dab78e80a7d6f6a6" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>LootRedeemCode - Free Google Play Redeem Code & Rewards</title>
+
+  <!-- HilltopAds Verification Meta Tag -->
+  <meta name="afccb499ac37d04138f2e378dab78e80a7d6f6a6" content="afccb499ac37d04138f2e378dab78e80a7d6f6a6" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
 
-  <!-- RichAds Integration (SiteID: 408514) -->
-  <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1024002" data-siteid="408514" async data-cfasync="false"></script>
+  <!-- HilltopAds Popunder Script -->
+  <script>
+  (function(oiwv){
+  var d = document,
+      s = d.createElement('script'),
+      l = d.currentScript || d.scripts[d.scripts.length - 1];
+  s.settings = oiwv || {};
+  s.src = "\/\/expensive-pollution.com\/cnDE9O6.bF2v5Al\/SYW\/QT9lNjzHQm2hOqTOI-wRN\/S\/0-3aN\/D\/Yr5\/MdjgAD5s";
+  s.async = true;
+  s.referrerPolicy = 'no-referrer-when-downgrade';
+  l.parentNode.insertBefore(s, l);
+  })({})
+  </script>
 
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -46,6 +59,7 @@
       position: relative;
     }
 
+    /* HEADER */
     .header {
       display: flex;
       align-items: center;
@@ -104,10 +118,12 @@
       border-radius: 2px;
     }
 
+    /* SCREENS */
     .app-screen { display: none; }
     .app-screen.active { display: block; animation: screenFade 0.2s ease-in-out; }
     @keyframes screenFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
+    /* AUTH SCREEN */
     .auth-card {
       background: radial-gradient(130% 120% at 85% 25%, #184214 0%, #08150a 65%, #020603 100%);
       border: 1px solid rgba(132, 204, 22, 0.35);
@@ -130,6 +146,7 @@
     }
     .auth-input:focus { border-color: #84CC16; }
 
+    /* HERO CARD */
     .hero-card {
       background: radial-gradient(130% 120% at 85% 25%, #184214 0%, #08150a 65%, #020603 100%);
       border: 1px solid rgba(132, 204, 22, 0.35);
@@ -137,7 +154,7 @@
       padding: 20px 18px;
       position: relative;
       overflow: hidden;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       box-shadow: 0 12px 35px rgba(0,0,0,0.7);
     }
     .hero-content { width: 62%; position: relative; z-index: 2; }
@@ -168,6 +185,69 @@
       z-index: 1;
     }
 
+    /* HIGH-CTR DIRECT LINK PULSE CARD */
+    .direct-link-card {
+      background: linear-gradient(135deg, #1e3a15 0%, #081409 100%);
+      border: 1.5px solid #EAB308;
+      border-radius: 18px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(234, 179, 8, 0.25);
+      animation: pulseGold 2s infinite;
+      text-decoration: none;
+      color: #FFF;
+    }
+    @keyframes pulseGold {
+      0% { transform: scale(1); box-shadow: 0 0 10px rgba(234, 179, 8, 0.2); }
+      50% { transform: scale(1.02); box-shadow: 0 0 22px rgba(234, 179, 8, 0.4); }
+      100% { transform: scale(1); box-shadow: 0 0 10px rgba(234, 179, 8, 0.2); }
+    }
+    .direct-badge-txt { font-size: 13px; font-weight: 900; color: #FFD21F; }
+    .direct-sub-txt { font-size: 10px; color: #DDD; }
+    .direct-btn-pill {
+      background: #EAB308;
+      color: #000;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 8px 14px;
+      border-radius: 16px;
+      white-space: nowrap;
+    }
+
+    /* VAST 3.0 VIDEO STREAM CONTAINER */
+    .vast-video-container {
+      background: #081009;
+      border: 1px solid rgba(132, 204, 22, 0.3);
+      border-radius: 18px;
+      padding: 12px;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    .vast-title {
+      font-size: 11px;
+      color: #84CC16;
+      font-weight: 800;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .vast-player-box {
+      width: 100%;
+      height: 190px;
+      background: #000;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+
+    /* DIVIDERS */
     .sec-divider {
       display: flex;
       align-items: center;
@@ -179,6 +259,7 @@
     .sec-text { font-size: 13px; font-weight: 900; letter-spacing: 1px; color: #FFF; display: flex; align-items: center; gap: 6px; }
     .neon-symbol { color: #84CC16; font-size: 10px; }
 
+    /* 3 EARN CARDS */
     .earn-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -215,6 +296,7 @@
     .btn-refer-color { background: #EAB308; color: #000; }
     .btn-flip-color { background: #2563EB; color: #FFF; }
 
+    /* DAILY TASKS */
     .task-bar {
       background: #081009;
       border: 1px solid rgba(132, 204, 22, 0.15);
@@ -237,6 +319,7 @@
       cursor: pointer;
     }
 
+    /* REDEEM CARDS */
     .redeem-card {
       background: #081009;
       border: 1px solid rgba(132, 204, 22, 0.2);
@@ -264,6 +347,7 @@
     }
     .btn-disabled { background: #18201B !important; color: #6B7280 !important; box-shadow: none !important; cursor: not-allowed !important; }
 
+    /* HISTORY */
     .order-item-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -293,6 +377,7 @@
       cursor: pointer;
     }
 
+    /* FOOTER BADGES */
     .footer-badges {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -306,6 +391,7 @@
     .f-title { font-size: 9px; font-weight: 800; color: #FFF; }
     .f-sub { font-size: 8px; color: #9CA3AF; }
 
+    /* MODAL POPUPS */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -330,6 +416,7 @@
     }
     .modal-close-txt { background: transparent; border: none; color: #9CA3AF; font-size: 11px; font-weight: 700; margin-top: 10px; cursor: pointer; }
 
+    /* WHEEL */
     .wheel-container {
       position: relative;
       width: 240px;
@@ -370,20 +457,13 @@
       box-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
       transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
     }
-
-    #aadsContainer {
-      width: 100%;
-      text-align: center;
-      margin: 20px 0;
-      position: relative;
-      z-index: 99;
-    }
   </style>
 </head>
 <body>
 
   <div class="app-container">
 
+    <!-- HEADER -->
     <div class="header">
       <div class="brand-wrap" onclick="checkHomeClick()">
         <div style="width:42px; height:42px;">
@@ -436,6 +516,8 @@
 
     <!-- SCREEN 1: HOME -->
     <div id="screen-home" class="app-screen">
+      
+      <!-- HERO -->
       <div class="hero-card">
         <div class="hero-content">
           <div class="hero-h1">
@@ -460,6 +542,32 @@
           <ellipse cx="40" cy="111" rx="14" ry="6" fill="#F59E0B"/>
           <ellipse cx="40" cy="107" rx="14" ry="6" fill="#FFD21F"/>
         </svg>
+      </div>
+
+      <!-- HIGH-CTR DIRECT LINK BADGE CARD -->
+      <a href="https://bold-consequence.com/1OKqrF" target="_blank" class="direct-link-card">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div style="font-size: 26px;">⚡</div>
+          <div>
+            <div class="direct-badge-txt">INSTANT ₹50 BONUS LOOT</div>
+            <div class="direct-sub-txt">Tap to unlock exclusive daily sponsor reward!</div>
+          </div>
+        </div>
+        <div class="direct-btn-pill">CLAIM ❯</div>
+      </a>
+
+      <!-- VAST 3.0 STREAMING VIDEO EMBED -->
+      <div class="vast-video-container">
+        <div class="vast-title">
+          <span>🎬</span> LIVE SPONSOR STREAM (EARN COINS)
+        </div>
+        <div class="vast-player-box">
+          <iframe 
+            src="https://expensive-pollution.com/dpmLFUz.dbGmNFvZZkG/Ux/iedmb9NuKZnUJlzkdP/Tbc/0-NWjTk/xAODDQUotyNyztQT2nOcTwEU4WO/Qy" 
+            style="width: 100%; height: 100%; border: none;" 
+            allow="autoplay; encrypted-media">
+          </iframe>
+        </div>
       </div>
 
       <div class="sec-divider">
@@ -538,11 +646,6 @@
         <button class="btn-task-outline" onclick="triggerTask()">Complete</button>
       </div>
 
-      <!-- A-ADS AD UNIT 2456710 -->
-      <div id="aadsContainer">
-        <iframe data-aa='2456710' src='//acceptable.a-ads.com/2456710/?size=Adaptive' style='border:0; padding:0; width:70%; height:auto; overflow:hidden; display:block; margin:auto;'></iframe>
-      </div>
-
       <div class="sec-divider">
         <div class="sec-line"></div>
         <div class="sec-text"><span class="neon-symbol">◄►</span> REDEEM OPTIONS <span class="neon-symbol">◄►</span></div>
@@ -572,8 +675,8 @@
         <button class="btn-full-redeem" onclick="openRedeemDialog()">🎁 Redeem Now</button>
       </div>
 
-      <!-- RESTORED: UPI INSTANT TRANSFER (COMING SOON) -->
-      <div class="redeem-card" style="opacity:0.65;">
+      <!-- UPI INSTANT TRANSFER (COMING SOON) -->
+      <div class="redeem-card" style="opacity:0.75;">
         <div class="redeem-top">
           <div style="display:flex; align-items:center; gap:12px;">
             <svg width="40" height="24" viewBox="0 0 100 45">
@@ -591,8 +694,8 @@
         <button class="btn-full-redeem btn-disabled">🔒 Coming Soon</button>
       </div>
 
-      <!-- RESTORED: AMAZON GIFT CARD (COMING SOON) -->
-      <div class="redeem-card" style="opacity:0.65;">
+      <!-- AMAZON GIFT CARD (COMING SOON) -->
+      <div class="redeem-card" style="opacity:0.75;">
         <div class="redeem-top">
           <div style="display:flex; align-items:center; gap:12px;">
             <svg width="34" height="34" viewBox="0 0 24 24">
@@ -674,7 +777,7 @@
 
   </div>
 
-  <!-- MODALS -->
+  <!-- POPUP MODALS -->
   <div id="modalSpin" class="modal-backdrop">
     <div class="modal-box">
       <h3 style="font-size:17px; font-weight:900; margin-bottom:4px;">🎡 Lucky Spin &amp; Win</h3>
@@ -733,7 +836,7 @@
     </div>
   </div>
 
-  <!-- SCRIPT -->
+  <!-- SCRIPT ENGINE -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAy3Zs3J3j-hFu3A9OfG68M4LRLFbwHwaA",
@@ -749,6 +852,21 @@
     const auth = firebase.auth();
     const db = firebase.database();
 
+    // HILLTOPADS VIDEO SLIDER INJECTION FUNCTION
+    function triggerHilltopVideoSlider() {
+      try {
+        var d = document,
+            s = d.createElement('script'),
+            l = d.currentScript || d.scripts[d.scripts.length - 1];
+        s.src = "//shameful-farm.com/bjX.Vfs/dTGDl/0LYTWkcY/AeOm/9Su-Z-U/l/ktPJTecn0xNdjIklxaNyjUk/t/NHzQQK2sO/TdEP3RMkwE";
+        s.async = true;
+        s.referrerPolicy = 'no-referrer-when-downgrade';
+        l.parentNode.insertBefore(s, l);
+      } catch (e) {
+        console.log("Ad Slider triggered");
+      }
+    }
+
     function getHardwareDeviceId() {
       let dId = localStorage.getItem('loot_hardware_device_token');
       if (!dId) {
@@ -763,13 +881,10 @@
     let currentUserData = null;
     let isSignupMode = true;
 
-    // BASE REFERRAL LINK
     const DEFAULT_BASE_DOMAIN = "https://loot-redeem-code.vercel.app/";
 
     let appRemoteConfig = {
       redeemActive: true,
-      directAdUrl: "https://richinfo.co/richpartners/pops/js/richads-pu-ob.js",
-      popunderScript: "",
       referralBaseLink: DEFAULT_BASE_DOMAIN
     };
 
@@ -781,7 +896,6 @@
       }
     });
 
-    // INDIAN TIME STAMP (IST)
     function getCurrentIndianDateString() {
       const options = { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'numeric', day: 'numeric' };
       return new Intl.DateTimeFormat('en-IN', options).format(new Date());
@@ -844,7 +958,7 @@
           const cred = await auth.createUserWithEmailAndPassword(email, pass);
           const uid = cred.user.uid;
           
-          // GENERATE CLEAN CODE: LOOT + 4 CHARS
+          // Generate clean referral code
           const generatedCode = 'LOOT' + Math.random().toString(36).substring(2, 6).toUpperCase();
           const today = getCurrentIndianDateString();
 
@@ -902,7 +1016,6 @@
       db.ref('loot_users/' + uid).on('value', snap => {
         currentUserData = snap.val();
         if (!currentUserData) {
-          // AUTO RECOVER IF USER CREATED VIA AUTH BUT NOT IN DB
           const today = getCurrentIndianDateString();
           currentUserData = {
             uid: uid,
@@ -999,12 +1112,12 @@
       return rewards[Math.floor(Math.random() * rewards.length)];
     }
 
+    // TASK CLAIM ACTION (TRIGGER VIDEO SLIDER)
     function triggerTask() {
       if (!currentUserData || currentUserData.taskLeft <= 0) return alert("Daily task limit reached (5/5)! Resets tonight at 12:00 AM.");
 
-      if (appRemoteConfig.directAdUrl) {
-        window.open(appRemoteConfig.directAdUrl, '_blank');
-      }
+      // Triggers Hilltop Video Slider
+      triggerHilltopVideoSlider();
 
       alert("Task Started! Please stay 6 seconds to complete...");
       setTimeout(() => {
@@ -1017,6 +1130,7 @@
       }, 6000);
     }
 
+    // SPIN WHEEL
     const wheelSegments = [
       { text: "₹0.10", val: 0.10, color: "#84CC16" },
       { text: "₹0.20", val: 0.20, color: "#7C3AED" },
@@ -1074,9 +1188,8 @@
       if (isSpinning) return;
       if (!currentUserData || currentUserData.spinLeft <= 0) return alert("Daily spin limit (5/5) reached! Resets tonight at 12:00 AM.");
 
-      if (appRemoteConfig.directAdUrl) {
-        window.open(appRemoteConfig.directAdUrl, '_blank');
-      }
+      // Triggers Hilltop Video Slider
+      triggerHilltopVideoSlider();
 
       isSpinning = true;
       const prizeIdx = Math.floor(Math.random() * wheelSegments.length);
@@ -1108,13 +1221,13 @@
       requestAnimationFrame(animate);
     }
 
+    // FLIP COIN
     function openFlipModal() { document.getElementById('modalFlip').style.display = 'flex'; }
     function executeCoinFlip() {
       if (!currentUserData || currentUserData.flipLeft <= 0) return alert("Daily flip limit (5/5) reached! Resets tonight at 12:00 AM.");
 
-      if (appRemoteConfig.directAdUrl) {
-        window.open(appRemoteConfig.directAdUrl, '_blank');
-      }
+      // Triggers Hilltop Video Slider
+      triggerHilltopVideoSlider();
 
       const coin = document.getElementById('coinFlipTarget');
       coin.style.transform = 'rotateY(720deg)';
@@ -1131,6 +1244,7 @@
       }, 1200);
     }
 
+    // REDEEM
     function openRedeemDialog() {
       if (appRemoteConfig.redeemActive === false) {
         return alert("Server down, please try again later");
