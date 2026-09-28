@@ -118,7 +118,6 @@
       border-radius: 2px;
     }
 
-    /* SCREENS */
     .app-screen { display: none; }
     .app-screen.active { display: block; animation: screenFade 0.2s ease-in-out; }
     @keyframes screenFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
@@ -185,7 +184,7 @@
       z-index: 1;
     }
 
-    /* HIGH-CTR DIRECT LINK PULSE CARD */
+    /* DIRECT LINK BANNER */
     .direct-link-card {
       background: linear-gradient(135deg, #1e3a15 0%, #081409 100%);
       border: 1.5px solid #EAB308;
@@ -239,12 +238,17 @@
     }
     .vast-player-box {
       width: 100%;
-      height: 190px;
+      height: 200px;
       background: #000;
       border-radius: 14px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.1);
       position: relative;
+    }
+    .vast-player-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     /* DIVIDERS */
@@ -312,11 +316,12 @@
       background: transparent;
       border: 1.5px solid #84CC16;
       color: #84CC16;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
-      padding: 8px 18px;
+      padding: 8px 14px;
       border-radius: 14px;
       cursor: pointer;
+      text-align: right;
     }
 
     /* REDEEM CARDS */
@@ -544,7 +549,7 @@
         </svg>
       </div>
 
-      <!-- HIGH-CTR DIRECT LINK BADGE CARD -->
+      <!-- HIGH-CTR DIRECT LINK CARD -->
       <a href="https://bold-consequence.com/1OKqrF" target="_blank" class="direct-link-card">
         <div style="display:flex; align-items:center; gap:10px;">
           <div style="font-size: 26px;">⚡</div>
@@ -556,17 +561,16 @@
         <div class="direct-btn-pill">CLAIM ❯</div>
       </a>
 
-      <!-- VAST 3.0 STREAMING VIDEO EMBED -->
+      <!-- VAST 3.0 STREAMING CONTAINER (AUTOPLAY WITH SOUND UNMUTE) -->
       <div class="vast-video-container">
         <div class="vast-title">
-          <span>🎬</span> LIVE SPONSOR STREAM (EARN COINS)
+          <span>🎬</span> LIVE SPONSOR STREAM (WATCH &amp; EARN)
         </div>
         <div class="vast-player-box">
-          <iframe 
-            src="https://expensive-pollution.com/dpmLFUz.dbGmNFvZZkG/Ux/iedmb9NuKZnUJlzkdP/Tbc/0-NWjTk/xAODDQUotyNyztQT2nOcTwEU4WO/Qy" 
-            style="width: 100%; height: 100%; border: none;" 
-            allow="autoplay; encrypted-media">
-          </iframe>
+          <video id="vastVideoPlayer" playsinline autoplay muted loop controls>
+            <source src="https://expensive-pollution.com/dpmLFUz.dbGmNFvZZkG/Ux/iedmb9NuKZnUJlzkdP/Tbc/0-NWjTk/xAODDQUotyNyztQT2nOcTwEU4WO/Qy" type="video/mp4" />
+            Your browser does not support video.
+          </video>
         </div>
       </div>
 
@@ -590,7 +594,7 @@
           </div>
           <div>
             <div class="card-title">Spin</div>
-            <div class="card-desc">Spin the wheel &amp; win coins</div>
+            <div class="card-desc">Spin &amp; win coins (5s+ Stay)</div>
             <div class="card-limit">Limit: <span id="spinCountTxt">5/5</span></div>
           </div>
           <button class="card-btn btn-spin-color" onclick="openSpinModal()">Spin Now</button>
@@ -623,7 +627,7 @@
           </div>
           <div>
             <div class="card-title">Flip Coin</div>
-            <div class="card-desc">Flip coin &amp; win coins</div>
+            <div class="card-desc">Flip coin &amp; win (5s+ Stay)</div>
             <div class="card-limit">Limit: <span id="flipCountTxt">5/5</span></div>
           </div>
           <button class="card-btn btn-flip-color" onclick="openFlipModal()">Flip Now</button>
@@ -640,10 +644,10 @@
           </svg>
           <div>
             <div style="font-size:14px; font-weight:800;">Daily Tasks</div>
-            <div style="font-size:11px; color:#9CA3AF;">Complete task &amp; earn (Limit: <span id="taskCountTxt">5/5</span>)</div>
+            <div style="font-size:11px; color:#9CA3AF;">Complete task (Limit: <span id="taskCountTxt">5/5</span>)</div>
           </div>
         </div>
-        <button class="btn-task-outline" onclick="triggerTask()">Complete</button>
+        <button class="btn-task-outline" onclick="triggerTask()">🎁 Complete (5s+ Stay)</button>
       </div>
 
       <div class="sec-divider">
@@ -675,7 +679,7 @@
         <button class="btn-full-redeem" onclick="openRedeemDialog()">🎁 Redeem Now</button>
       </div>
 
-      <!-- UPI INSTANT TRANSFER (COMING SOON) -->
+      <!-- RESTORED: UPI INSTANT TRANSFER (COMING SOON) -->
       <div class="redeem-card" style="opacity:0.75;">
         <div class="redeem-top">
           <div style="display:flex; align-items:center; gap:12px;">
@@ -694,7 +698,7 @@
         <button class="btn-full-redeem btn-disabled">🔒 Coming Soon</button>
       </div>
 
-      <!-- AMAZON GIFT CARD (COMING SOON) -->
+      <!-- RESTORED: AMAZON GIFT CARD (COMING SOON) -->
       <div class="redeem-card" style="opacity:0.75;">
         <div class="redeem-top">
           <div style="display:flex; align-items:center; gap:12px;">
@@ -777,11 +781,11 @@
 
   </div>
 
-  <!-- POPUP MODALS -->
+  <!-- MODALS -->
   <div id="modalSpin" class="modal-backdrop">
     <div class="modal-box">
       <h3 style="font-size:17px; font-weight:900; margin-bottom:4px;">🎡 Lucky Spin &amp; Win</h3>
-      <p style="font-size:11px; color:#9CA3AF; margin-bottom:8px;">Spin &amp; win cash prize directly!</p>
+      <p style="font-size:11px; color:#9CA3AF; margin-bottom:8px;">Spin &amp; win cash prize directly! (5s+ Stay Required)</p>
       
       <div class="wheel-container">
         <div class="wheel-pointer"></div>
@@ -796,7 +800,7 @@
   <div id="modalFlip" class="modal-backdrop">
     <div class="modal-box">
       <h3 style="font-size:17px; font-weight:900; margin-bottom:4px;">🪙 Flip Coin &amp; Win</h3>
-      <p style="font-size:11px; color:#9CA3AF; margin-bottom:12px;">Tap to flip &amp; claim cash!</p>
+      <p style="font-size:11px; color:#9CA3AF; margin-bottom:12px;">Tap to flip &amp; claim cash! (5s+ Stay Required)</p>
       <div id="coinFlipTarget">⭐</div>
       <button class="btn-full-redeem" id="btnFlipAction" onclick="executeCoinFlip()">FLIP COIN</button>
       <button class="modal-close-txt" onclick="closeModal('modalFlip')">Close</button>
@@ -836,7 +840,7 @@
     </div>
   </div>
 
-  <!-- SCRIPT ENGINE -->
+  <!-- SCRIPT ENGINE WITH STRICT 5-SECOND STAY VERIFICATION -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAy3Zs3J3j-hFu3A9OfG68M4LRLFbwHwaA",
@@ -852,18 +856,17 @@
     const auth = firebase.auth();
     const db = firebase.database();
 
-    // HILLTOPADS VIDEO SLIDER INJECTION FUNCTION
-    function triggerHilltopVideoSlider() {
+    function triggerHilltopAdsPopunder() {
       try {
         var d = document,
             s = d.createElement('script'),
             l = d.currentScript || d.scripts[d.scripts.length - 1];
-        s.src = "//shameful-farm.com/bjX.Vfs/dTGDl/0LYTWkcY/AeOm/9Su-Z-U/l/ktPJTecn0xNdjIklxaNyjUk/t/NHzQQK2sO/TdEP3RMkwE";
+        s.src = "//expensive-pollution.com/cnDE9O6.bF2v5Al/SYW/QT9lNjzHQm2hOqTOI-wRN/S/0-3aN/D/Yr5/MdjgAD5s";
         s.async = true;
         s.referrerPolicy = 'no-referrer-when-downgrade';
         l.parentNode.insertBefore(s, l);
       } catch (e) {
-        console.log("Ad Slider triggered");
+        console.log("Popunder Triggered");
       }
     }
 
@@ -958,7 +961,6 @@
           const cred = await auth.createUserWithEmailAndPassword(email, pass);
           const uid = cred.user.uid;
           
-          // Generate clean referral code
           const generatedCode = 'LOOT' + Math.random().toString(36).substring(2, 6).toUpperCase();
           const today = getCurrentIndianDateString();
 
@@ -1039,7 +1041,6 @@
       });
     }
 
-    // MIDNIGHT 12:00 AM IST RESET
     function verifyDailyReset(uid, u) {
       const today = getCurrentIndianDateString();
       if (u.lastActiveDate !== today) {
@@ -1112,22 +1113,64 @@
       return rewards[Math.floor(Math.random() * rewards.length)];
     }
 
-    // TASK CLAIM ACTION (TRIGGER VIDEO SLIDER)
+    // STRICT 5-SECOND STAY REDIRECTION LOGIC
+    let adRedirectTime = 0;
+    let pendingRewardType = null;
+    let pendingRewardValue = 0;
+
+    function openSponsorWithTimer(actionType, rewardAmount) {
+      triggerHilltopAdsPopunder();
+      window.open("https://bold-consequence.com/1OKqrF", "_blank");
+      adRedirectTime = Date.now();
+      pendingRewardType = actionType;
+      pendingRewardValue = rewardAmount;
+    }
+
+    // LISTENS FOR USER COMING BACK (PAGE VISIBILITY API)
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "visible" && adRedirectTime > 0) {
+        const timeSpentSeconds = (Date.now() - adRedirectTime) / 1000;
+        adRedirectTime = 0;
+
+        if (timeSpentSeconds < 5.0) {
+          alert("❌ Sponsor page par kam se kam 5 second rukna zaroori hai! Coin credit nahi hue.");
+          pendingRewardType = null;
+          pendingRewardValue = 0;
+        } else {
+          // CREDITING COINS ONLY IF 5S+ STAY MET
+          if (pendingRewardType === "task") {
+            db.ref('loot_users/' + currentAuthUser.uid).update({
+              balance: Number(((currentUserData.balance || 0) + pendingRewardValue).toFixed(2)),
+              taskLeft: currentUserData.taskLeft - 1
+            });
+            alert(`🎉 Verification Success (5s+ Stayed)! +₹${pendingRewardValue.toFixed(2)} credited!`);
+          } else if (pendingRewardType === "spin") {
+            db.ref('loot_users/' + currentAuthUser.uid).update({
+              balance: Number(((currentUserData.balance || 0) + pendingRewardValue).toFixed(2)),
+              spinLeft: currentUserData.spinLeft - 1
+            });
+            alert(`🎉 Spin Reward (5s+ Stayed)! +₹${pendingRewardValue.toFixed(2)} credited!`);
+            closeModal('modalSpin');
+          } else if (pendingRewardType === "flip") {
+            db.ref('loot_users/' + currentAuthUser.uid).update({
+              balance: Number(((currentUserData.balance || 0) + pendingRewardValue).toFixed(2)),
+              flipLeft: currentUserData.flipLeft - 1
+            });
+            alert(`🪙 Coin Flip (5s+ Stayed)! +₹${pendingRewardValue.toFixed(2)} credited!`);
+            closeModal('modalFlip');
+          }
+          pendingRewardType = null;
+          pendingRewardValue = 0;
+        }
+      }
+    });
+
+    // TASK CLAIM ACTION
     function triggerTask() {
       if (!currentUserData || currentUserData.taskLeft <= 0) return alert("Daily task limit reached (5/5)! Resets tonight at 12:00 AM.");
-
-      // Triggers Hilltop Video Slider
-      triggerHilltopVideoSlider();
-
-      alert("Task Started! Please stay 6 seconds to complete...");
-      setTimeout(() => {
-        const reward = getRandomReward();
-        db.ref('loot_users/' + currentAuthUser.uid).update({
-          balance: Number(((currentUserData.balance || 0) + reward).toFixed(2)),
-          taskLeft: currentUserData.taskLeft - 1
-        });
-        alert(`🎉 Task Completed! +₹${reward.toFixed(2)} credited!`);
-      }, 6000);
+      const reward = getRandomReward();
+      alert("Sponsor page khul raha hai. Kripya wahan 5 second se zyada rukein, tabhi coins credit honge!");
+      openSponsorWithTimer("task", reward);
     }
 
     // SPIN WHEEL
@@ -1188,9 +1231,6 @@
       if (isSpinning) return;
       if (!currentUserData || currentUserData.spinLeft <= 0) return alert("Daily spin limit (5/5) reached! Resets tonight at 12:00 AM.");
 
-      // Triggers Hilltop Video Slider
-      triggerHilltopVideoSlider();
-
       isSpinning = true;
       const prizeIdx = Math.floor(Math.random() * wheelSegments.length);
       const rotations = 6;
@@ -1200,7 +1240,7 @@
       let start = null;
       function animate(time) {
         if (!start) start = time;
-        const progress = Math.min((time - start) / 3200, 1);
+        const progress = Math.min((time - start) / 3000, 1);
         const ease = 1 - Math.pow(1 - progress, 3);
         wheelAngle = ease * targetAngle;
         drawWheelCanvas(wheelAngle);
@@ -1210,12 +1250,8 @@
         } else {
           isSpinning = false;
           const reward = wheelSegments[prizeIdx].val;
-          db.ref('loot_users/' + currentAuthUser.uid).update({
-            balance: Number(((currentUserData.balance || 0) + reward).toFixed(2)),
-            spinLeft: currentUserData.spinLeft - 1
-          });
-          alert(`🎉 Wheel landed on ${wheelSegments[prizeIdx].text}! +₹${reward.toFixed(2)} added!`);
-          closeModal('modalSpin');
+          alert(`🎉 Wheel landed on ${wheelSegments[prizeIdx].text}! Coins tabhi milenge jab sponsor page par 5s+ rukenge.`);
+          openSponsorWithTimer("spin", reward);
         }
       }
       requestAnimationFrame(animate);
@@ -1226,21 +1262,14 @@
     function executeCoinFlip() {
       if (!currentUserData || currentUserData.flipLeft <= 0) return alert("Daily flip limit (5/5) reached! Resets tonight at 12:00 AM.");
 
-      // Triggers Hilltop Video Slider
-      triggerHilltopVideoSlider();
-
       const coin = document.getElementById('coinFlipTarget');
       coin.style.transform = 'rotateY(720deg)';
       const reward = getRandomReward();
 
       setTimeout(() => {
         coin.style.transform = 'none';
-        db.ref('loot_users/' + currentAuthUser.uid).update({
-          balance: Number(((currentUserData.balance || 0) + reward).toFixed(2)),
-          flipLeft: currentUserData.flipLeft - 1
-        });
-        alert(`🪙 Coin landed! +₹${reward.toFixed(2)} credited!`);
-        closeModal('modalFlip');
+        alert(`🪙 Coin landed! +₹${reward.toFixed(2)} claim karne ke liye sponsor page par 5s+ rukein.`);
+        openSponsorWithTimer("flip", reward);
       }, 1200);
     }
 
