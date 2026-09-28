@@ -12,14 +12,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
 
-  <!-- HilltopAds Popunder Script -->
-  <script id="hilltopPopScript">
-  (function(oiwv){
+  <!-- Naya HilltopAds Popunder Script -->
+  <script>
+  (function(axju){
   var d = document,
       s = d.createElement('script'),
       l = d.currentScript || d.scripts[d.scripts.length - 1];
-  s.settings = oiwv || {};
-  s.src = "\/\/expensive-pollution.com\/cnDE9O6.bF2v5Al\/SYW\/QT9lNjzHQm2hOqTOI-wRN\/S\/0-3aN\/D\/Yr5\/MdjgAD5s";
+  s.settings = axju || {};
+  s.src = "\/\/expensive-pollution.com\/ciDI9S6\/b.2\/5YlPSQWDQU9XNNz\/QR2hOsT\/IMwINZSS0B3HN\/DvY_5qMmjMAa5P";
   s.async = true;
   s.referrerPolicy = 'no-referrer-when-downgrade';
   l.parentNode.insertBefore(s, l);
@@ -213,6 +213,7 @@
       white-space: nowrap;
     }
 
+    /* VAST PLAYER FIXED CONTAINER */
     .vast-video-container {
       background: #081009;
       border: 1px solid rgba(132, 204, 22, 0.3);
@@ -234,7 +235,7 @@
     .vast-player-box {
       width: 100%;
       height: 200px;
-      background: radial-gradient(circle, #152414 0%, #030804 100%);
+      background: #000;
       border-radius: 14px;
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -243,7 +244,7 @@
     .vast-player-box iframe {
       width: 100%;
       height: 100%;
-      border: none;
+      border: 0;
     }
 
     .sec-divider {
@@ -292,6 +293,7 @@
     .btn-spin-color { background: #6D28D9; color: #FFF; }
     .btn-refer-color { background: #EAB308; color: #000; }
     .btn-flip-color { background: #2563EB; color: #FFF; }
+    .btn-timer-locked { background: #374151 !important; color: #9CA3AF !important; cursor: not-allowed !important; }
 
     .task-bar {
       background: #081009;
@@ -449,47 +451,24 @@
       box-shadow: 0 0 25px rgba(245, 158, 11, 0.4);
       transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
     }
-
-    /* 40-SECOND CLAIM TIMER OVERLAY */
-    #taskTimerOverlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(2, 6, 3, 0.96);
-      backdrop-filter: blur(20px);
-      z-index: 999999;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      text-align: center;
-    }
-    .timer-circle {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 4px solid #84CC16;
-      box-shadow: 0 0 30px rgba(132, 204, 22, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 38px;
-      font-weight: 900;
-      color: #FFD21F;
-      margin-bottom: 20px;
-    }
   </style>
 </head>
 <body>
 
-  <!-- 40-SECOND REAL-TIME COUNTDOWN OVERLAY -->
-  <div id="taskTimerOverlay">
-    <div class="timer-circle" id="overlayCountdownNum">40</div>
-    <h3 style="font-size: 20px; font-weight: 900; color: #FFF; margin-bottom: 8px;">Ad Verification In Progress</h3>
-    <p style="font-size: 12px; color: #9CA3AF; max-width: 300px; line-height: 1.5; margin-bottom: 24px;">
-      Sponsor window open ho chuki hai. Kripya wahan <b>40 seconds</b> rukein. Timer poora hone par coins auto-credit ho jayenge!
-    </p>
-    <div style="font-size: 11px; color: #EAB308; font-weight: 800;">Do not close or refresh this page!</div>
+  <!-- MODAL: DEDICATED CLAIM COIN POPUP -->
+  <div id="modalClaimReward" class="modal-backdrop">
+    <div class="modal-box">
+      <div style="font-size: 42px; margin-bottom: 6px;">🎉</div>
+      <h3 style="font-size: 19px; font-weight: 900; margin-bottom: 6px;" id="claimModalHeading">You Won ₹0.20!</h3>
+      <p style="font-size: 12px; color: #9CA3AF; line-height: 1.5; margin-bottom: 16px;">
+        Coin claim karne ke liye button par click karein aur sponsor ad page par <b style="color:#FFD21F;">5s+ wait karein</b>, phir back aayein.<br/>
+        <span style="color:#EF4444; font-size:10px;">(Agar pehle back aayenge toh coin nahi milega!)</span>
+      </p>
+
+      <button class="btn-full-redeem" onclick="executeClaimActionRedirect()">
+        🎁 Claim Coin (5s+ Wait Required)
+      </button>
+    </div>
   </div>
 
   <div class="app-container">
@@ -575,7 +554,7 @@
         </svg>
       </div>
 
-      <!-- HIGH-CTR DIRECT LINK BADGE CARD -->
+      <!-- HIGH-CTR DIRECT LINK CARD -->
       <a href="https://bold-consequence.com/1OKqrF" target="_blank" class="direct-link-card">
         <div style="display:flex; align-items:center; gap:10px;">
           <div style="font-size: 26px;">⚡</div>
@@ -587,7 +566,7 @@
         <div class="direct-btn-pill">CLAIM ❯</div>
       </a>
 
-      <!-- VAST 3.0 AUTOPLAYING STREAMING PLAYER -->
+      <!-- VAST 3.0 FIXED LIVE CONTAINER -->
       <div class="vast-video-container">
         <div class="vast-title">
           <span>🎬</span> LIVE SPONSOR STREAM (EARN COINS)
@@ -595,8 +574,8 @@
         <div class="vast-player-box">
           <iframe 
             src="https://expensive-pollution.com/dpmLFUz.dbGmNFvZZkG/Ux/iedmb9NuKZnUJlzkdP/Tbc/0-NWjTk/xAODDQUotyNyztQT2nOcTwEU4WO/Qy" 
-            allow="autoplay" 
-            sandbox="allow-scripts allow-same-origin allow-forms">
+            allow="autoplay; fullscreen"
+            sandbox="allow-scripts allow-same-origin allow-popups">
           </iframe>
         </div>
       </div>
@@ -621,10 +600,10 @@
           </div>
           <div>
             <div class="card-title">Spin</div>
-            <div class="card-desc">Spin &amp; win (40s Task)</div>
+            <div class="card-desc">Spin &amp; win coins</div>
             <div class="card-limit">Limit: <span id="spinCountTxt">5/5</span></div>
           </div>
-          <button class="card-btn btn-spin-color" onclick="openSpinModal()">Spin Now</button>
+          <button class="card-btn btn-spin-color" id="btnSpinMain" onclick="openSpinModal()">Spin Now</button>
         </div>
 
         <div class="grid-card">
@@ -654,10 +633,10 @@
           </div>
           <div>
             <div class="card-title">Flip Coin</div>
-            <div class="card-desc">Flip coin (40s Task)</div>
+            <div class="card-desc">Flip coin &amp; win</div>
             <div class="card-limit">Limit: <span id="flipCountTxt">5/5</span></div>
           </div>
-          <button class="card-btn btn-flip-color" onclick="openFlipModal()">Flip Now</button>
+          <button class="card-btn btn-flip-color" id="btnFlipMain" onclick="openFlipModal()">Flip Now</button>
         </div>
       </div>
 
@@ -674,7 +653,7 @@
             <div style="font-size:11px; color:#9CA3AF;">Complete task (Limit: <span id="taskCountTxt">5/5</span>)</div>
           </div>
         </div>
-        <button class="btn-task-outline" onclick="triggerTask()">🎁 Complete (40s)</button>
+        <button class="btn-task-outline" id="btnTaskMain" onclick="triggerTask()">🎁 Complete Task</button>
       </div>
 
       <div class="sec-divider">
@@ -808,18 +787,18 @@
 
   </div>
 
-  <!-- MODALS -->
+  <!-- POPUP MODALS -->
   <div id="modalSpin" class="modal-backdrop">
     <div class="modal-box">
       <h3 style="font-size:17px; font-weight:900; margin-bottom:4px;">🎡 Lucky Spin &amp; Win</h3>
-      <p style="font-size:11px; color:#9CA3AF; margin-bottom:8px;">Spin &amp; win cash prize directly! (40s Task)</p>
+      <p style="font-size:11px; color:#9CA3AF; margin-bottom:8px;">Spin &amp; win cash prize directly!</p>
       
       <div class="wheel-container">
         <div class="wheel-pointer"></div>
         <canvas id="spinWheelCanvas" width="240" height="240"></canvas>
       </div>
 
-      <button class="btn-full-redeem" id="btnSpinAction" onclick="executeSpin()">SPIN &amp; EARN</button>
+      <button class="btn-full-redeem" id="btnSpinAction" onclick="executeSpin()">SPIN WHEEL</button>
       <button class="modal-close-txt" onclick="closeModal('modalSpin')">Close</button>
     </div>
   </div>
@@ -827,7 +806,7 @@
   <div id="modalFlip" class="modal-backdrop">
     <div class="modal-box">
       <h3 style="font-size:17px; font-weight:900; margin-bottom:4px;">🪙 Flip Coin &amp; Win</h3>
-      <p style="font-size:11px; color:#9CA3AF; margin-bottom:12px;">Tap to flip &amp; claim cash! (40s Task)</p>
+      <p style="font-size:11px; color:#9CA3AF; margin-bottom:12px;">Tap to flip coin!</p>
       <div id="coinFlipTarget">⭐</div>
       <button class="btn-full-redeem" id="btnFlipAction" onclick="executeCoinFlip()">FLIP COIN</button>
       <button class="modal-close-txt" onclick="closeModal('modalFlip')">Close</button>
@@ -867,7 +846,7 @@
     </div>
   </div>
 
-  <!-- SCRIPT ENGINE -->
+  <!-- SCRIPT ENGINE WITH CLAIM VERIFICATION & 40-SECOND COOLDOWN -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAy3Zs3J3j-hFu3A9OfG68M4LRLFbwHwaA",
@@ -883,11 +862,11 @@
     const auth = firebase.auth();
     const db = firebase.database();
 
-    // HILLTOPADS POPUNDER SCRIPT INJECTION (FIRES ON DIRECT USER TOUCH)
+    // HILLTOPADS POPUNDER INJECTION
     function triggerHilltopAdsPopunder() {
       try {
         const popScript = document.createElement('script');
-        popScript.src = "//expensive-pollution.com/cnDE9O6.bF2v5Al/SYW/QT9lNjzHQm2hOqTOI-wRN/S/0-3aN/D/Yr5/MdjgAD5s";
+        popScript.src = "//expensive-pollution.com/ciDI9S6/b.2/5YlPSQWDQU9XNNz/QR2hOsT/IMwINZSS0B3HN/DvY_5qMmjMAa5P";
         popScript.async = true;
         popScript.referrerPolicy = 'no-referrer-when-downgrade';
         document.body.appendChild(popScript);
@@ -896,7 +875,7 @@
       }
     }
 
-    // VIDEO SLIDER INJECTION
+    // HILLTOPADS VIDEO SLIDER INJECTION
     function triggerHilltopVideoSlider() {
       try {
         var d = document,
@@ -1088,7 +1067,6 @@
       });
     }
 
-    // MIDNIGHT 12:00 AM IST RESET
     function verifyDailyReset(uid, u) {
       const today = getCurrentIndianDateString();
       if (u.lastActiveDate !== today) {
@@ -1161,58 +1139,89 @@
       return rewards[Math.floor(Math.random() * rewards.length)];
     }
 
-    // STRICT 40-SECOND OVERLAY & POPUNDER INTEGRATION
-    let taskTimerInterval = null;
+    // ==========================================
+    // 5-SECOND STAY & 40-SECOND COOLDOWN SYSTEM
+    // ==========================================
+    let claimActionState = {
+      type: null,
+      reward: 0,
+      timestamp: 0
+    };
 
-    function start40SecondClaimTask(actionType, rewardAmount) {
-      // 1. Direct Popunder Execution
+    let cooldownTimers = {
+      spinCooldown: 0,
+      flipCooldown: 0
+    };
+
+    function showClaimModal(actionType, rewardAmount) {
+      claimActionState.type = actionType;
+      claimActionState.reward = rewardAmount;
+      document.getElementById('claimModalHeading').innerText = `You Won ₹${rewardAmount.toFixed(2)}!`;
+      document.getElementById('modalClaimReward').style.display = 'flex';
+    }
+
+    // Step 2: Trigger Ads on Claim Button Click
+    function executeClaimActionRedirect() {
       triggerHilltopAdsPopunder();
-      
-      // 2. Video Slider Execution
-      triggerHilltopVideoSlider();
-      
-      // 3. Open Sponsor Ad in New Tab
       window.open("https://bold-consequence.com/1OKqrF", "_blank");
+      claimActionState.timestamp = Date.now();
+    }
 
-      // 4. Start 40s Countdown Overlay
-      const overlay = document.getElementById("taskTimerOverlay");
-      const numDisplay = document.getElementById("overlayCountdownNum");
-      overlay.style.display = "flex";
+    // Step 3: Listen for User Coming Back
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "visible" && claimActionState.timestamp > 0) {
+        const timeSpent = (Date.now() - claimActionState.timestamp) / 1000;
+        claimActionState.timestamp = 0;
 
-      let secondsLeft = 40;
-      numDisplay.innerText = secondsLeft;
+        if (timeSpent < 5.0) {
+          alert("❌ 5 second se pehle wapas aa gaye! Coin credit nahi hue. Pura 5s+ rukein.");
+          document.getElementById('modalClaimReward').style.display = 'none';
+        } else {
+          // CREDITING COINS (SUCCESS)
+          const amount = claimActionState.reward;
+          const action = claimActionState.type;
 
-      clearInterval(taskTimerInterval);
-      taskTimerInterval = setInterval(() => {
-        secondsLeft--;
-        numDisplay.innerText = secondsLeft;
-
-        if (secondsLeft <= 0) {
-          clearInterval(taskTimerInterval);
-          overlay.style.display = "none";
-
-          // Credits balance ONLY AFTER 40s verification completes
-          if (actionType === "task") {
+          if (action === "task") {
             db.ref('loot_users/' + currentAuthUser.uid).update({
-              balance: Number(((currentUserData.balance || 0) + rewardAmount).toFixed(2)),
+              balance: Number(((currentUserData.balance || 0) + amount).toFixed(2)),
               taskLeft: currentUserData.taskLeft - 1
             });
-            alert(`🎉 40s Ad Verified! +₹${rewardAmount.toFixed(2)} credited!`);
-          } else if (actionType === "spin") {
+            alert(`🎉 Task Verified! +₹${amount.toFixed(2)} added to wallet!`);
+          } else if (action === "spin") {
             db.ref('loot_users/' + currentAuthUser.uid).update({
-              balance: Number(((currentUserData.balance || 0) + rewardAmount).toFixed(2)),
+              balance: Number(((currentUserData.balance || 0) + amount).toFixed(2)),
               spinLeft: currentUserData.spinLeft - 1
             });
-            alert(`🎉 Spin Claimed (40s Verified)! +₹${rewardAmount.toFixed(2)} credited!`);
-            closeModal('modalSpin');
-          } else if (actionType === "flip") {
+            alert(`🎉 Lucky Spin Verified! +₹${amount.toFixed(2)} added!`);
+            startCooldown("spin");
+          } else if (action === "flip") {
             db.ref('loot_users/' + currentAuthUser.uid).update({
-              balance: Number(((currentUserData.balance || 0) + rewardAmount).toFixed(2)),
+              balance: Number(((currentUserData.balance || 0) + amount).toFixed(2)),
               flipLeft: currentUserData.flipLeft - 1
             });
-            alert(`🪙 Flip Coin (40s Verified)! +₹${rewardAmount.toFixed(2)} credited!`);
-            closeModal('modalFlip');
+            alert(`🪙 Coin Flip Verified! +₹${amount.toFixed(2)} added!`);
+            startCooldown("flip");
           }
+
+          document.getElementById('modalClaimReward').style.display = 'none';
+        }
+      }
+    });
+
+    // 40-SECOND COOLDOWN LOGIC FOR NEXT SPIN / FLIP
+    function startCooldown(action) {
+      let timeLeft = 40;
+      const btn = (action === "spin") ? document.getElementById("btnSpinMain") : document.getElementById("btnFlipMain");
+      btn.classList.add("btn-timer-locked");
+
+      const interval = setInterval(() => {
+        timeLeft--;
+        btn.innerText = `⏳ Wait ${timeLeft}s`;
+
+        if (timeLeft <= 0) {
+          clearInterval(interval);
+          btn.classList.remove("btn-timer-locked");
+          btn.innerText = (action === "spin") ? "Spin Now" : "Flip Now";
         }
       }, 1000);
     }
@@ -1221,7 +1230,7 @@
     function triggerTask() {
       if (!currentUserData || currentUserData.taskLeft <= 0) return alert("Daily task limit reached (5/5)! Resets tonight at 12:00 AM.");
       const reward = getRandomReward();
-      start40SecondClaimTask("task", reward);
+      showClaimModal("task", reward);
     }
 
     // SPIN WHEEL
@@ -1237,6 +1246,8 @@
     let isSpinning = false;
 
     function openSpinModal() {
+      const btn = document.getElementById("btnSpinMain");
+      if (btn.classList.contains("btn-timer-locked")) return alert("Please wait 40 seconds before spinning again!");
       document.getElementById('modalSpin').style.display = 'flex';
       drawWheelCanvas(wheelAngle);
     }
@@ -1300,15 +1311,21 @@
           requestAnimationFrame(animate);
         } else {
           isSpinning = false;
+          closeModal('modalSpin');
           const reward = wheelSegments[prizeIdx].val;
-          start40SecondClaimTask("spin", reward);
+          showClaimModal("spin", reward);
         }
       }
       requestAnimationFrame(animate);
     }
 
     // FLIP COIN
-    function openFlipModal() { document.getElementById('modalFlip').style.display = 'flex'; }
+    function openFlipModal() {
+      const btn = document.getElementById("btnFlipMain");
+      if (btn.classList.contains("btn-timer-locked")) return alert("Please wait 40 seconds before flipping again!");
+      document.getElementById('modalFlip').style.display = 'flex';
+    }
+
     function executeCoinFlip() {
       if (!currentUserData || currentUserData.flipLeft <= 0) return alert("Daily flip limit (5/5) reached! Resets tonight at 12:00 AM.");
 
@@ -1318,7 +1335,8 @@
 
       setTimeout(() => {
         coin.style.transform = 'none';
-        start40SecondClaimTask("flip", reward);
+        closeModal('modalFlip');
+        showClaimModal("flip", reward);
       }, 1200);
     }
 
