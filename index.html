@@ -9,12 +9,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
 
+  <!-- RichAds Integration (SiteID: 408514) -->
+  <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1024002" data-siteid="408514" async data-cfasync="false"></script>
+
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
-  <div id="dynamicAdHeadSlot"></div>
 
   <style>
     * {
@@ -44,7 +45,6 @@
       position: relative;
     }
 
-    /* HEADER */
     .header {
       display: flex;
       align-items: center;
@@ -103,12 +103,10 @@
       border-radius: 2px;
     }
 
-    /* SCREENS */
     .app-screen { display: none; }
     .app-screen.active { display: block; animation: screenFade 0.2s ease-in-out; }
     @keyframes screenFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* AUTH SCREEN */
     .auth-card {
       background: radial-gradient(130% 120% at 85% 25%, #184214 0%, #08150a 65%, #020603 100%);
       border: 1px solid rgba(132, 204, 22, 0.35);
@@ -131,7 +129,6 @@
     }
     .auth-input:focus { border-color: #84CC16; }
 
-    /* HERO CARD */
     .hero-card {
       background: radial-gradient(130% 120% at 85% 25%, #184214 0%, #08150a 65%, #020603 100%);
       border: 1px solid rgba(132, 204, 22, 0.35);
@@ -170,7 +167,6 @@
       z-index: 1;
     }
 
-    /* DIVIDERS */
     .sec-divider {
       display: flex;
       align-items: center;
@@ -182,7 +178,6 @@
     .sec-text { font-size: 13px; font-weight: 900; letter-spacing: 1px; color: #FFF; display: flex; align-items: center; gap: 6px; }
     .neon-symbol { color: #84CC16; font-size: 10px; }
 
-    /* 3 EARN CARDS */
     .earn-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -219,7 +214,6 @@
     .btn-refer-color { background: #EAB308; color: #000; }
     .btn-flip-color { background: #2563EB; color: #FFF; }
 
-    /* DAILY TASKS */
     .task-bar {
       background: #081009;
       border: 1px solid rgba(132, 204, 22, 0.15);
@@ -242,7 +236,6 @@
       cursor: pointer;
     }
 
-    /* REDEEM CARDS */
     .redeem-card {
       background: #081009;
       border: 1px solid rgba(132, 204, 22, 0.2);
@@ -268,8 +261,8 @@
       gap: 6px;
       box-shadow: 0 4px 15px rgba(132, 204, 22, 0.3);
     }
+    .btn-disabled { background: #18201B !important; color: #6B7280 !important; box-shadow: none !important; cursor: not-allowed !important; }
 
-    /* USER ORDERS / HISTORY LIST */
     .order-item-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -299,7 +292,6 @@
       cursor: pointer;
     }
 
-    /* FOOTER BADGES */
     .footer-badges {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -313,7 +305,6 @@
     .f-title { font-size: 9px; font-weight: 800; color: #FFF; }
     .f-sub { font-size: 8px; color: #9CA3AF; }
 
-    /* MODAL POPUPS */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -338,7 +329,6 @@
     }
     .modal-close-txt { background: transparent; border: none; color: #9CA3AF; font-size: 11px; font-weight: 700; margin-top: 10px; cursor: pointer; }
 
-    /* SPIN WHEEL */
     .wheel-container {
       position: relative;
       width: 240px;
@@ -380,11 +370,12 @@
       transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
-    #dynamicAdBannerSlot {
+    #aadsContainer {
       width: 100%;
       text-align: center;
-      margin-top: 16px;
-      min-height: 50px;
+      margin: 20px 0;
+      position: relative;
+      z-index: 99;
     }
   </style>
 </head>
@@ -392,7 +383,6 @@
 
   <div class="app-container">
 
-    <!-- HEADER -->
     <div class="header">
       <div class="brand-wrap" onclick="checkHomeClick()">
         <div style="width:42px; height:42px;">
@@ -423,7 +413,7 @@
       </div>
     </div>
 
-    <!-- SCREEN 0: AUTH SCREEN -->
+    <!-- SCREEN 0: AUTH -->
     <div id="screen-auth" class="app-screen active">
       <div class="auth-card">
         <div style="font-size: 40px; margin-bottom: 8px;">🎁</div>
@@ -443,7 +433,7 @@
       </div>
     </div>
 
-    <!-- SCREEN 1: MAIN HOME DASHBOARD -->
+    <!-- SCREEN 1: HOME -->
     <div id="screen-home" class="app-screen">
       <div class="hero-card">
         <div class="hero-content">
@@ -547,12 +537,18 @@
         <button class="btn-task-outline" onclick="triggerTask()">Complete</button>
       </div>
 
+      <!-- A-ADS AD UNIT 2456710 -->
+      <div id="aadsContainer">
+        <iframe data-aa='2456710' src='//acceptable.a-ads.com/2456710/?size=Adaptive' style='border:0; padding:0; width:70%; height:auto; overflow:hidden; display:block; margin:auto;'></iframe>
+      </div>
+
       <div class="sec-divider">
         <div class="sec-line"></div>
         <div class="sec-text"><span class="neon-symbol">◄►</span> REDEEM OPTIONS <span class="neon-symbol">◄►</span></div>
         <div class="sec-line"></div>
       </div>
 
+      <!-- GOOGLE PLAY CODE -->
       <div class="redeem-card">
         <div class="redeem-top">
           <div style="display:flex; align-items:center; gap:12px; width:65%;">
@@ -575,7 +571,44 @@
         <button class="btn-full-redeem" onclick="openRedeemDialog()">🎁 Redeem Now</button>
       </div>
 
-      <!-- MY REDEEM ORDERS & REWARD CODES (HISTORY) -->
+      <!-- RESTORED: UPI INSTANT TRANSFER (COMING SOON) -->
+      <div class="redeem-card" style="opacity:0.65;">
+        <div class="redeem-top">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <svg width="40" height="24" viewBox="0 0 100 45">
+              <polygon points="15,40 35,5 45,5 25,40" fill="#097939"/>
+              <polygon points="35,40 55,5 65,5 45,40" fill="#ED7524"/>
+              <text x="65" y="32" font-size="28" font-weight="900" fill="#FFF">UPI</text>
+            </svg>
+            <div>
+              <div style="font-size:14px; font-weight:800;">UPI Instant Transfer</div>
+              <div style="font-size:10px; color:#9CA3AF;">Direct bank transfer via UPI</div>
+            </div>
+          </div>
+          <span style="font-size:11px; color:#F59E0B; font-weight:800;">Coming Soon</span>
+        </div>
+        <button class="btn-full-redeem btn-disabled">🔒 Coming Soon</button>
+      </div>
+
+      <!-- RESTORED: AMAZON GIFT CARD (COMING SOON) -->
+      <div class="redeem-card" style="opacity:0.65;">
+        <div class="redeem-top">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <svg width="34" height="34" viewBox="0 0 24 24">
+              <path fill="#FF9900" d="M18.8 17.2c-3.1 2.3-7.5 3.5-11.4 3.5-5.4 0-10.2-2.1-13.9-5.6-.3-.3-.1-.7.3-.5 4.3 2.5 9.5 4 14.8 4 3.5 0 7.4-.9 10.6-2.8.5-.3.8.3.4.6z"/>
+              <path fill="#FFF" d="M13.7 13.2c0-1.8-.4-3.1-1.3-4-1-.9-2.3-1.4-4-1.4-2.5 0-4.4 1-5.3 2.1-.3.3-.2.7.1.9l1.4 1c.3.2.7.2 1-.1.6-.7 1.5-1.2 2.7-1.2 1.8 0 2.7 1 2.7 2.7v.5c-4 .2-6.5 1.6-6.5 4.2 0 1.9 1.4 3.1 3.4 3.1 1.7 0 3-1 3.7-2.3v1.8c0 .3.2.5.5.5h2.1c.3 0 .5-.2.5-.5v-7.3h-.9zm-2.7 2.8c0 1.6-1.1 2.8-2.6 2.8-1 0-1.8-.6-1.8-1.7 0-1.5 1.3-2.3 4.4-2.4v1.3z"/>
+            </svg>
+            <div>
+              <div style="font-size:14px; font-weight:800;">Amazon Gift Card</div>
+              <div style="font-size:10px; color:#9CA3AF;">Add balance directly to Amazon Pay</div>
+            </div>
+          </div>
+          <span style="font-size:11px; color:#F59E0B; font-weight:800;">Coming Soon</span>
+        </div>
+        <button class="btn-full-redeem btn-disabled">🔒 Coming Soon</button>
+      </div>
+
+      <!-- MY REDEEM HISTORY (WITH COPY BUTTON) -->
       <div class="sec-divider" style="margin-top:24px;">
         <div class="sec-line"></div>
         <div class="sec-text"><span class="neon-symbol">◄►</span> MY REDEEM HISTORY <span class="neon-symbol">◄►</span></div>
@@ -584,11 +617,9 @@
       <div id="userOrdersContainer">
         <div style="text-align:center; font-size:11px; color:#9CA3AF; padding:10px;">No redeem orders placed yet.</div>
       </div>
-
-      <div id="dynamicAdBannerSlot"></div>
     </div>
 
-    <!-- SCREEN 2: DEDICATED REFER EARN -->
+    <!-- SCREEN 2: REFER EARN -->
     <div id="screen-refer" class="app-screen">
       <div style="display:flex; align-items:center; gap:10px; margin-bottom:16px;">
         <button onclick="switchScreen('home')" style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:12px; color:#FFF; padding:8px 14px; font-weight:800; cursor:pointer;">← Back</button>
@@ -631,7 +662,7 @@
       </button>
     </div>
 
-    <!-- FOOTER TRUST BADGES -->
+    <!-- FOOTER BADGES -->
     <div class="footer-badges">
       <div class="f-item"><span style="color:#84CC16;">🛡️</span><div class="f-title">100% Secure</div><div class="f-sub">Safe &amp; Trusted</div></div>
       <div class="f-item"><span style="color:#EAB308;">⚡</span><div class="f-title">Instant Payout</div><div class="f-sub">No Delay</div></div>
@@ -642,7 +673,7 @@
 
   </div>
 
-  <!-- POPUP MODALS -->
+  <!-- MODALS -->
   <div id="modalSpin" class="modal-backdrop">
     <div class="modal-box">
       <h3 style="font-size:17px; font-weight:900; margin-bottom:4px;">🎡 Lucky Spin &amp; Win</h3>
@@ -701,7 +732,7 @@
     </div>
   </div>
 
-  <!-- JAVASCRIPT LOGIC ENGINE -->
+  <!-- SCRIPT -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAy3Zs3J3j-hFu3A9OfG68M4LRLFbwHwaA",
@@ -731,39 +762,35 @@
     let currentUserData = null;
     let isSignupMode = true;
 
+    // BASE REFERRAL LINK
+    const DEFAULT_BASE_DOMAIN = "https://loot-redeem-code.vercel.app/";
+
     let appRemoteConfig = {
       redeemActive: true,
       directAdUrl: "https://richinfo.co/richpartners/pops/js/richads-pu-ob.js",
       popunderScript: "",
-      bannerAdCode: "",
-      referralBaseLink: "https://lootredeemcodei.blogspot.com"
+      referralBaseLink: DEFAULT_BASE_DOMAIN
     };
 
     db.ref('loot_master_config').on('value', snap => {
       const v = snap.val();
       if (v) {
         appRemoteConfig = Object.assign(appRemoteConfig, v);
-        injectAdminAds();
         if (currentUserData) renderUserInterface(currentUserData);
       }
     });
 
-    function injectAdminAds() {
-      if (appRemoteConfig.popunderScript && !document.getElementById('injectedPopunderSlot')) {
-        const slot = document.getElementById('dynamicAdHeadSlot');
-        slot.innerHTML = appRemoteConfig.popunderScript;
-      }
-      if (appRemoteConfig.bannerAdCode) {
-        document.getElementById('dynamicAdBannerSlot').innerHTML = appRemoteConfig.bannerAdCode;
-      }
+    // INDIAN TIME STAMP (IST)
+    function getCurrentIndianDateString() {
+      const options = { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'numeric', day: 'numeric' };
+      return new Intl.DateTimeFormat('en-IN', options).format(new Date());
     }
 
-    // STRICT AUTH LISTENER (NO JUMP TO DASHBOARD UNLESS LOGGED IN)
     auth.onAuthStateChanged(user => {
       if (user && !user.isAnonymous) {
         currentAuthUser = user;
         switchScreen('home');
-        syncUserDatabase(user.uid);
+        syncUserDatabase(user.uid, user.email);
         listenUserOrders(user.uid);
       } else {
         currentAuthUser = null;
@@ -807,19 +834,21 @@
 
         if (!name) return alert("Apna naam enter karein!");
 
-        // ONE DEVICE ONE ACCOUNT LOCK CHECK
         const deviceCheckSnap = await db.ref('loot_device_bindings/' + currentDeviceId).once('value');
         if (deviceCheckSnap.exists()) {
-          return alert("⚠️ Is Device par pehle se ek account ban chuka hai! Ek phone par sirf 1 account chal sakta hai. Login karein.");
+          return alert("⚠️ Is Device par pehle se ek account ban chuka hai! Login karein.");
         }
 
         try {
           const cred = await auth.createUserWithEmailAndPassword(email, pass);
           const uid = cred.user.uid;
-          const generatedCode = 'LT' + Math.random().toString(36).substring(2, 6).toUpperCase();
+          
+          // GENERATE CLEAN CODE: LOOT + 4 CHARS
+          const generatedCode = 'LOOT' + Math.random().toString(36).substring(2, 6).toUpperCase();
           const today = getCurrentIndianDateString();
 
           const newUserData = {
+            uid: uid,
             name: name,
             email: email,
             deviceId: currentDeviceId,
@@ -868,23 +897,35 @@
       });
     }
 
-    // INDIAN STANDARD TIME (IST) HELPER (RAAT 12 BAJE RESET)
-    function getCurrentIndianDateString() {
-      const options = { timeZone: 'Asia/Kolkata', year: 'numeric', month: 'numeric', day: 'numeric' };
-      return new Intl.DateTimeFormat('en-IN', options).format(new Date());
-    }
-
-    function syncUserDatabase(uid) {
+    function syncUserDatabase(uid, email) {
       db.ref('loot_users/' + uid).on('value', snap => {
         currentUserData = snap.val();
-        if (currentUserData) {
-          verifyDailyReset(uid, currentUserData);
-          renderUserInterface(currentUserData);
+        if (!currentUserData) {
+          // AUTO RECOVER IF USER CREATED VIA AUTH BUT NOT IN DB
+          const today = getCurrentIndianDateString();
+          currentUserData = {
+            uid: uid,
+            name: email.split('@')[0],
+            email: email,
+            deviceId: currentDeviceId,
+            balance: 0.00,
+            spinLeft: 5,
+            flipLeft: 5,
+            taskLeft: 5,
+            lastActiveDate: today,
+            referralCode: 'LOOT' + Math.random().toString(36).substring(2, 6).toUpperCase(),
+            referralsCount: 0,
+            createdAt: Date.now()
+          };
+          db.ref('loot_users/' + uid).set(currentUserData);
         }
+
+        verifyDailyReset(uid, currentUserData);
+        renderUserInterface(currentUserData);
       });
     }
 
-    // DAILY MIDNIGHT 12:00 AM AUTO RESET LOGIC
+    // MIDNIGHT 12:00 AM IST RESET
     function verifyDailyReset(uid, u) {
       const today = getCurrentIndianDateString();
       if (u.lastActiveDate !== today) {
@@ -906,7 +947,7 @@
       const code = u.referralCode || "LOOT01";
       document.getElementById('userRefCodeDisplay').innerText = code;
 
-      const base = appRemoteConfig.referralBaseLink || "https://lootredeemcodei.blogspot.com";
+      const base = appRemoteConfig.referralBaseLink || DEFAULT_BASE_DOMAIN;
       const shareUrl = `${base}?ref=${code}`;
       document.getElementById('userRefLinkInput').value = shareUrl;
 
@@ -918,7 +959,6 @@
       document.getElementById('btnShareTelegram').href = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${shareMsg}`;
     }
 
-    // LISTEN & DISPLAY USER'S ORDERS WITH COPY CODE BUTTON
     function listenUserOrders(uid) {
       db.ref('loot_orders').orderByChild('uid').equalTo(uid).on('value', snap => {
         const container = document.getElementById('userOrdersContainer');
@@ -958,7 +998,6 @@
       return rewards[Math.floor(Math.random() * rewards.length)];
     }
 
-    // TASK ACTION (PREVENTS BINA TASK KIYE COMPLETE HONA)
     function triggerTask() {
       if (!currentUserData || currentUserData.taskLeft <= 0) return alert("Daily task limit reached (5/5)! Resets tonight at 12:00 AM.");
 
@@ -966,7 +1005,7 @@
         window.open(appRemoteConfig.directAdUrl, '_blank');
       }
 
-      alert("Task Started! Sponsor link opened in new tab. Please stay for 6 seconds to complete...");
+      alert("Task Started! Please stay 6 seconds to complete...");
       setTimeout(() => {
         const reward = getRandomReward();
         db.ref('loot_users/' + currentAuthUser.uid).update({
@@ -977,7 +1016,6 @@
       }, 6000);
     }
 
-    // SPIN WHEEL
     const wheelSegments = [
       { text: "₹0.10", val: 0.10, color: "#84CC16" },
       { text: "₹0.20", val: 0.20, color: "#7C3AED" },
@@ -1069,7 +1107,6 @@
       requestAnimationFrame(animate);
     }
 
-    // FLIP COIN
     function openFlipModal() { document.getElementById('modalFlip').style.display = 'flex'; }
     function executeCoinFlip() {
       if (!currentUserData || currentUserData.flipLeft <= 0) return alert("Daily flip limit (5/5) reached! Resets tonight at 12:00 AM.");
@@ -1093,7 +1130,6 @@
       }, 1200);
     }
 
-    // REDEEM PLAY CODE
     function openRedeemDialog() {
       if (appRemoteConfig.redeemActive === false) {
         return alert("Server down, please try again later");
