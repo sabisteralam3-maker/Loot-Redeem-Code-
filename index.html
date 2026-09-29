@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
 
-  <!-- Naya HilltopAds Popunder Script -->
+  <!-- HilltopAds Popunder Script -->
   <script>
   (function(axju){
   var d = document,
@@ -213,7 +213,7 @@
       white-space: nowrap;
     }
 
-    /* VAST PLAYER FIXED CONTAINER */
+    /* VAST PLAYER FIXED LIVE STREAM */
     .vast-video-container {
       background: #081009;
       border: 1px solid rgba(132, 204, 22, 0.3);
@@ -455,14 +455,14 @@
 </head>
 <body>
 
-  <!-- MODAL: DEDICATED CLAIM COIN POPUP -->
+  <!-- MODAL: CLAIM COIN WITH 5S+ WAIT VERIFICATION -->
   <div id="modalClaimReward" class="modal-backdrop">
     <div class="modal-box">
       <div style="font-size: 42px; margin-bottom: 6px;">🎉</div>
-      <h3 style="font-size: 19px; font-weight: 900; margin-bottom: 6px;" id="claimModalHeading">You Won ₹0.20!</h3>
+      <h3 style="font-size: 19px; font-weight: 900; margin-bottom: 6px;" id="claimModalHeading">You Won ₹0.11!</h3>
       <p style="font-size: 12px; color: #9CA3AF; line-height: 1.5; margin-bottom: 16px;">
-        Coin claim karne ke liye button par click karein aur sponsor ad page par <b style="color:#FFD21F;">5s+ wait karein</b>, phir back aayein.<br/>
-        <span style="color:#EF4444; font-size:10px;">(Agar pehle back aayenge toh coin nahi milega!)</span>
+        Coin claim karne ke liye button dabayein aur sponsor page par <b style="color:#FFD21F;">5s+ wait karein</b>, phir back aayein.<br/>
+        <span style="color:#EF4444; font-size:10px;">(Pehle back aane par coin credit nahi hoga!)</span>
       </p>
 
       <button class="btn-full-redeem" onclick="executeClaimActionRedirect()">
@@ -566,13 +566,14 @@
         <div class="direct-btn-pill">CLAIM ❯</div>
       </a>
 
-      <!-- VAST 3.0 FIXED LIVE CONTAINER -->
+      <!-- VAST 3.0 STREAMING CONTAINER (ACTIVE AUTO-ROTATING PLAYER) -->
       <div class="vast-video-container">
         <div class="vast-title">
           <span>🎬</span> LIVE SPONSOR STREAM (EARN COINS)
         </div>
-        <div class="vast-player-box">
+        <div class="vast-player-box" id="vastPlayerContainer">
           <iframe 
+            id="vastIframePlayer"
             src="https://expensive-pollution.com/dpmLFUz.dbGmNFvZZkG/Ux/iedmb9NuKZnUJlzkdP/Tbc/0-NWjTk/xAODDQUotyNyztQT2nOcTwEU4WO/Qy" 
             allow="autoplay; fullscreen"
             sandbox="allow-scripts allow-same-origin allow-popups">
@@ -600,7 +601,7 @@
           </div>
           <div>
             <div class="card-title">Spin</div>
-            <div class="card-desc">Spin &amp; win coins</div>
+            <div class="card-desc">Spin &amp; win (₹0.10 - ₹0.12)</div>
             <div class="card-limit">Limit: <span id="spinCountTxt">5/5</span></div>
           </div>
           <button class="card-btn btn-spin-color" id="btnSpinMain" onclick="openSpinModal()">Spin Now</button>
@@ -633,7 +634,7 @@
           </div>
           <div>
             <div class="card-title">Flip Coin</div>
-            <div class="card-desc">Flip coin &amp; win</div>
+            <div class="card-desc">Flip coin &amp; win (₹0.10 - ₹0.12)</div>
             <div class="card-limit">Limit: <span id="flipCountTxt">5/5</span></div>
           </div>
           <button class="card-btn btn-flip-color" id="btnFlipMain" onclick="openFlipModal()">Flip Now</button>
@@ -685,7 +686,7 @@
         <button class="btn-full-redeem" onclick="openRedeemDialog()">🎁 Redeem Now</button>
       </div>
 
-      <!-- UPI INSTANT TRANSFER (COMING SOON) -->
+      <!-- RESTORED: UPI INSTANT TRANSFER (COMING SOON) -->
       <div class="redeem-card" style="opacity:0.75;">
         <div class="redeem-top">
           <div style="display:flex; align-items:center; gap:12px;">
@@ -704,7 +705,7 @@
         <button class="btn-full-redeem btn-disabled">🔒 Coming Soon</button>
       </div>
 
-      <!-- AMAZON GIFT CARD (COMING SOON) -->
+      <!-- RESTORED: AMAZON GIFT CARD (COMING SOON) -->
       <div class="redeem-card" style="opacity:0.75;">
         <div class="redeem-top">
           <div style="display:flex; align-items:center; gap:12px;">
@@ -787,7 +788,7 @@
 
   </div>
 
-  <!-- POPUP MODALS -->
+  <!-- MODALS -->
   <div id="modalSpin" class="modal-backdrop">
     <div class="modal-box">
       <h3 style="font-size:17px; font-weight:900; margin-bottom:4px;">🎡 Lucky Spin &amp; Win</h3>
@@ -846,7 +847,7 @@
     </div>
   </div>
 
-  <!-- SCRIPT ENGINE WITH CLAIM VERIFICATION & 40-SECOND COOLDOWN -->
+  <!-- SCRIPT ENGINE -->
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAy3Zs3J3j-hFu3A9OfG68M4LRLFbwHwaA",
@@ -862,7 +863,7 @@
     const auth = firebase.auth();
     const db = firebase.database();
 
-    // HILLTOPADS POPUNDER INJECTION
+    // HILLTOPADS DIRECT POPUNDER TRIGGER
     function triggerHilltopAdsPopunder() {
       try {
         const popScript = document.createElement('script');
@@ -871,11 +872,11 @@
         popScript.referrerPolicy = 'no-referrer-when-downgrade';
         document.body.appendChild(popScript);
       } catch (err) {
-        console.error("Popunder Execution:", err);
+        console.error("Popunder error:", err);
       }
     }
 
-    // HILLTOPADS VIDEO SLIDER INJECTION
+    // HILLTOPADS VIDEO SLIDER TRIGGER
     function triggerHilltopVideoSlider() {
       try {
         var d = document,
@@ -886,14 +887,17 @@
         s.referrerPolicy = 'no-referrer-when-downgrade';
         l.parentNode.insertBefore(s, l);
       } catch (e) {
-        console.log("Slider Triggered");
+        console.log("Slider auto error:", e);
       }
     }
 
-    // AUTOMATED 1-MINUTE BACKGROUND ADS RELOAD LOOP
+    // CONTINUOUS LIVE AD RELOADER (HER MINUTE AUTO TRIGGER SLIDER & VAST AD)
     setInterval(() => {
       triggerHilltopVideoSlider();
-      console.log("1-Minute Auto Ads Loop Fired");
+      const iframe = document.getElementById('vastIframePlayer');
+      if (iframe) {
+        iframe.src = iframe.src; // Auto-reload live VAST ad
+      }
     }, 60000);
 
     function getHardwareDeviceId() {
@@ -1134,8 +1138,9 @@
       alert("🎉 Redeem Code Copied: " + code);
     }
 
+    // PER TASK REWARD: STRICTLY ₹0.10 TO ₹0.12
     function getRandomReward() {
-      const rewards = [0.10, 0.20, 0.30, 0.40, 0.50];
+      const rewards = [0.10, 0.11, 0.12];
       return rewards[Math.floor(Math.random() * rewards.length)];
     }
 
@@ -1148,11 +1153,6 @@
       timestamp: 0
     };
 
-    let cooldownTimers = {
-      spinCooldown: 0,
-      flipCooldown: 0
-    };
-
     function showClaimModal(actionType, rewardAmount) {
       claimActionState.type = actionType;
       claimActionState.reward = rewardAmount;
@@ -1160,24 +1160,22 @@
       document.getElementById('modalClaimReward').style.display = 'flex';
     }
 
-    // Step 2: Trigger Ads on Claim Button Click
     function executeClaimActionRedirect() {
       triggerHilltopAdsPopunder();
+      triggerHilltopVideoSlider();
       window.open("https://bold-consequence.com/1OKqrF", "_blank");
       claimActionState.timestamp = Date.now();
     }
 
-    // Step 3: Listen for User Coming Back
     document.addEventListener("visibilitychange", function () {
       if (document.visibilityState === "visible" && claimActionState.timestamp > 0) {
         const timeSpent = (Date.now() - claimActionState.timestamp) / 1000;
         claimActionState.timestamp = 0;
 
         if (timeSpent < 5.0) {
-          alert("❌ 5 second se pehle wapas aa gaye! Coin credit nahi hue. Pura 5s+ rukein.");
+          alert("❌ 5 second se pehle wapas aa gaye! Coin credit nahi hue. Pura 5s+ wait karein.");
           document.getElementById('modalClaimReward').style.display = 'none';
         } else {
-          // CREDITING COINS (SUCCESS)
           const amount = claimActionState.reward;
           const action = claimActionState.type;
 
@@ -1208,7 +1206,7 @@
       }
     });
 
-    // 40-SECOND COOLDOWN LOGIC FOR NEXT SPIN / FLIP
+    // 40-SECOND COOLDOWN LOGIC
     function startCooldown(action) {
       let timeLeft = 40;
       const btn = (action === "spin") ? document.getElementById("btnSpinMain") : document.getElementById("btnFlipMain");
@@ -1233,14 +1231,14 @@
       showClaimModal("task", reward);
     }
 
-    // SPIN WHEEL
+    // SPIN WHEEL (UPDATED VALUES ₹0.10, ₹0.11, ₹0.12)
     const wheelSegments = [
       { text: "₹0.10", val: 0.10, color: "#84CC16" },
-      { text: "₹0.20", val: 0.20, color: "#7C3AED" },
-      { text: "₹0.30", val: 0.30, color: "#EAB308" },
-      { text: "₹0.40", val: 0.40, color: "#2563EB" },
-      { text: "₹0.50", val: 0.50, color: "#EC4899" },
-      { text: "₹0.15", val: 0.15, color: "#10B981" }
+      { text: "₹0.11", val: 0.11, color: "#7C3AED" },
+      { text: "₹0.12", val: 0.12, color: "#EAB308" },
+      { text: "₹0.10", val: 0.10, color: "#2563EB" },
+      { text: "₹0.11", val: 0.11, color: "#EC4899" },
+      { text: "₹0.12", val: 0.12, color: "#10B981" }
     ];
     let wheelAngle = 0;
     let isSpinning = false;
